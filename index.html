@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Refa Firgiyanto</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Situs pribadi Ir. Refa Firgiyanto, S.P., M.Si. — dosen Agronomi dan Hortikultura, Politeknik Negeri Jember.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: herbarium-sheet page — a pressed-specimen label in the hero, collection-style index tiles, then long catalogue sections on a single column with a sticky index bar. */
+:root{
+  --paper:#f2f5ef;      /* herbarium sheet, faint chlorophyll tint */
+  --sheet:#fbfcf9;      /* raised label */
+  --ink:#16302a;        /* deep leaf ink */
+  --muted:#56675f;
+  --rule:#cfd9cf;
+  --leaf:#2f6b4f;       /* stem green */
+  --orchid:#7d3f8f;     /* Vanda orchid accent */
+  --orchid-soft:#efe3f2;
+  --pollen:#b57d12;     /* small tags only */
+  /* section colours: one hue per section, used for its number, band tint, tags and index tile */
+  --c-profil:#2f6b4f; --c-riset:#2e5ea8; --c-pub:#7d3f8f; --c-buku:#b0700f;
+  --c-hki:#c0492f; --c-abdi:#b8336a; --c-ajar:#0e8a7d; --c-award:#9a7400; --c-galeri:#4a6358;
+  --display:"Young Serif", Georgia, "Times New Roman", serif;
+  --body:"Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0f1a17;--sheet:#15241f;--ink:#e3ece6;--muted:#9db0a6;--rule:#2a3d36;--leaf:#7fc2a0;--orchid:#d3a3e2;--orchid-soft:#2c1f33;--pollen:#e2b04f;--c-profil:#7fc2a0;--c-riset:#8fb3f0;--c-pub:#d3a3e2;--c-buku:#e7b04f;--c-hki:#f08a6f;--c-abdi:#f08fb6;--c-ajar:#5fd1c2;--c-award:#e3c35a;--c-galeri:#a9c4b8;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#0f1a17;--sheet:#15241f;--ink:#e3ece6;--muted:#9db0a6;--rule:#2a3d36;--leaf:#7fc2a0;--orchid:#d3a3e2;--orchid-soft:#2c1f33;--pollen:#e2b04f;--c-profil:#7fc2a0;--c-riset:#8fb3f0;--c-pub:#d3a3e2;--c-buku:#e7b04f;--c-hki:#f08a6f;--c-abdi:#f08fb6;--c-ajar:#5fd1c2;--c-award:#e3c35a;--c-galeri:#a9c4b8;color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--paper)}
+a{color:var(--leaf);text-underline-offset:3px}
+a:hover{color:var(--orchid)}
+:focus-visible{outline:2px solid var(--orchid);outline-offset:2px;border-radius:3px}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:balance;margin:0}
+p{margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.mono{font-family:var(--mono)}
+.eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+/* header */
+header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.bar .wrap{display:flex;align-items:center;gap:20px;min-height:60px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);flex:none}
+.mark{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--leaf);display:grid;place-items:center;font-family:var(--display);font-size:.95rem;color:var(--leaf)}
+.brand b{font-family:var(--display);font-weight:400;font-size:1.05rem}
+nav.idx{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;min-width:0;margin-left:auto}
+nav.idx::-webkit-scrollbar{display:none}
+nav.idx a{flex:none;text-decoration:none;color:var(--muted);font-size:.875rem;font-weight:500;padding:6px 10px;border-radius:6px}
+nav.idx a:hover,nav.idx a.on{color:var(--ink);background:var(--orchid-soft)}
+.theme{flex:none;background:none;border:1px solid var(--rule);color:var(--ink);border-radius:6px;width:34px;height:34px;cursor:pointer;font-size:.95rem}
+@media (max-width:720px){.brand b{display:none}.bar .wrap{gap:10px}}
+
+/* hero */
+.hero{padding-block:56px 40px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:48px;align-items:start}
+.hero h1{font-size:clamp(2.6rem,6vw,4.4rem);letter-spacing:-.01em;margin-top:14px}
+.cred{font-family:var(--display);font-size:clamp(1.1rem,2vw,1.35rem);color:var(--orchid);margin-top:6px}
+.lede{font-size:1.125rem;color:var(--ink);max-width:60ch;margin-top:22px}
+.lede + .lede{margin-top:12px;color:var(--muted);font-size:1rem}
+.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:8px;border:1px solid var(--rule);background:var(--sheet);color:var(--ink);text-decoration:none;font-weight:600;font-size:.9rem}
+.btn:hover{border-color:var(--orchid);color:var(--orchid)}
+.btn.primary{background:var(--leaf);border-color:var(--leaf);color:var(--sheet)}
+.btn.primary:hover{background:var(--orchid);border-color:var(--orchid);color:var(--sheet)}
+.btn svg{width:16px;height:16px;flex:none}
+
+/* specimen label */
+.specimen{position:relative;background:var(--sheet);border:1px solid var(--rule);border-radius:4px;padding:22px 22px 18px;box-shadow:0 1px 0 var(--rule),0 18px 40px -28px rgba(22,48,42,.45)}
+.specimen::before,.specimen::after{content:"";position:absolute;width:46px;height:14px;background:color-mix(in srgb,var(--pollen) 22%,transparent);top:-7px}
+.specimen::before{left:24px;transform:rotate(-3deg)}
+.specimen::after{right:24px;transform:rotate(4deg)}
+.specimen svg.sprig{display:block;width:100%;height:150px;margin-bottom:14px}
+.specimen .hd{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--ink);padding-bottom:8px;margin-bottom:10px}
+.specimen .hd span{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase}
+.specimen dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0;font-size:.875rem}
+.specimen dt{font-family:var(--mono);font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;padding-top:2px}
+.specimen dd{margin:0;min-width:0}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr;gap:36px}.hero{padding-block:36px 28px}}
+
+/* metrics */
+.metrics{border-block:1px solid var(--rule);background:var(--sheet)}
+.metrics .wrap{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));padding-block:22px}
+.metric{padding-inline:14px;border-left:1px solid var(--rule)}
+.metric:first-child{border-left:0;padding-left:0}
+.metric b{display:block;font-family:var(--display);font-weight:400;font-size:1.9rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.metric span{font-size:.8rem;color:var(--muted)}
+.metrics .src{grid-column:1/-1;margin-top:14px;font-size:.75rem;color:var(--muted)}
+@media (max-width:860px){.metrics .wrap{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:18px}.metric:nth-child(4){border-left:0;padding-left:0}}
+@media (max-width:460px){.metrics .wrap{grid-template-columns:repeat(2,minmax(0,1fr))}.metric:nth-child(odd){border-left:0;padding-left:0}.metric:nth-child(4){border-left:1px solid var(--rule);padding-left:14px}}
+
+/* sections */
+section.s{padding-block:64px 8px}
+section.banner + section.s,figure.strip + section.s{padding-top:56px}
+.sh{display:grid;grid-template-columns:200px minmax(0,1fr);gap:32px;margin-bottom:26px;align-items:end}
+.sh .eyebrow{padding-bottom:6px}
+.sh h2{font-size:clamp(1.8rem,3.4vw,2.5rem)}
+.sh p{color:var(--muted);margin-top:8px;max-width:62ch}
+.body{display:grid;grid-template-columns:200px minmax(0,1fr);gap:32px}
+.body > .side{font-size:.85rem;color:var(--muted)}
+@media (max-width:860px){.sh,.body{grid-template-columns:1fr;gap:6px}.body{gap:18px}.body > .side:empty{display:none}}
+
+/* collection index tiles */
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+.tile{background:var(--sheet);padding:18px 18px 16px;text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:4px;min-height:118px}
+.tile:hover{background:var(--orchid-soft)}
+.tile .n{font-family:var(--display);font-size:2rem;line-height:1;color:var(--leaf);font-variant-numeric:tabular-nums}
+.tile:hover .n{color:var(--orchid)}
+.tile .l{font-weight:600}
+.tile .d{font-size:.8rem;color:var(--muted)}
+@media (max-width:860px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* profile */
+.prose p{max-width:66ch}
+.prose p + p{margin-top:14px}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;margin-top:32px}
+@media (max-width:640px){.cols{grid-template-columns:1fr}}
+.block h3{font-size:1.2rem;margin-bottom:12px}
+.edu{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.edu li{display:grid;grid-template-columns:76px minmax(0,1fr);gap:12px}
+.edu .y{font-family:var(--mono);font-size:.8rem;color:var(--muted);padding-top:3px}
+.edu b{display:block}
+.edu small{display:block;color:var(--muted);font-size:.85rem;margin-top:2px}
+.edu i{display:block;font-size:.85rem;margin-top:6px}
+.roles{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.roles li{padding-left:16px;position:relative}
+.roles li::before{content:"";position:absolute;left:0;top:.68em;width:7px;height:7px;border-radius:50%;border:1.5px solid var(--leaf)}
+.roles small{color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.chip{font-size:.82rem;padding:5px 11px;border:1px solid var(--rule);border-radius:999px;background:var(--sheet)}
+
+/* record lists */
+.rec{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.rec > li{display:grid;grid-template-columns:64px minmax(0,1fr);gap:16px;padding-block:14px;border-bottom:1px solid var(--rule)}
+.rec .y{font-family:var(--mono);font-size:.82rem;color:var(--muted);padding-top:2px;font-variant-numeric:tabular-nums}
+.rec .t{font-weight:500}
+.rec .m{font-size:.85rem;color:var(--muted);margin-top:4px}
+.rec .m a{word-break:break-word}
+.tag{display:inline-block;font-family:var(--mono);font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:4px;border:1px solid currentColor;margin-right:6px;vertical-align:1px;white-space:nowrap}
+.tag.nat{color:var(--orchid)}
+.tag.loc{color:var(--leaf)}
+.tag.q{color:var(--pollen)}
+.tag.role{color:var(--leaf)}
+.more{margin-top:14px;background:none;border:1px solid var(--rule);color:var(--ink);padding:9px 14px;border-radius:8px;font:inherit;font-size:.875rem;font-weight:600;cursor:pointer}
+.more:hover{border-color:var(--orchid);color:var(--orchid)}
+
+/* publication tools */
+.tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px}
+.tools input{flex:1 1 240px;min-width:0;padding:10px 12px;border:1px solid var(--rule);border-radius:8px;background:var(--sheet);color:var(--ink);font:inherit;font-size:.9rem}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{background:var(--sheet);border:1px solid var(--rule);color:var(--muted);padding:6px 11px;border-radius:999px;font:inherit;font-size:.8rem;font-weight:500;cursor:pointer;font-variant-numeric:tabular-nums}
+.seg button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.count{font-size:.8rem;color:var(--muted);margin-bottom:6px}
+.spark{display:flex;align-items:flex-end;gap:6px;height:64px;margin:4px 0 8px}
+.spark div{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end}
+.spark i{display:block;width:100%;background:var(--leaf);opacity:.75;border-radius:2px 2px 0 0}
+.spark span{font-family:var(--mono);font-size:.65rem;color:var(--muted)}
+.side .spark{max-width:200px}
+
+/* books */
+.books{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.book{background:var(--sheet);border:1px solid var(--rule);border-left:6px solid var(--leaf);border-radius:3px;padding:14px 14px 12px;display:flex;flex-direction:column;gap:6px}
+.book:nth-child(3n+2){border-left-color:var(--orchid)}
+.book:nth-child(3n){border-left-color:var(--pollen)}
+.book .t{font-family:var(--display);font-size:1.02rem;line-height:1.25}
+.book .m{font-size:.8rem;color:var(--muted);margin-top:auto}
+.book .i{font-family:var(--mono);font-size:.7rem;color:var(--muted)}
+
+/* hki table */
+.tbl{overflow-x:auto;border:1px solid var(--rule);border-radius:6px;background:var(--sheet)}
+table{border-collapse:collapse;width:100%;font-size:.875rem;min-width:620px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
+tr:last-child td{border-bottom:0}
+td.n{font-family:var(--mono);font-size:.75rem;white-space:nowrap;color:var(--muted)}
+td.y{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* courses & awards */
+.courses{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:0 24px;list-style:none;margin:0;padding:0;counter-reset:c}
+.courses li{padding:10px 0;border-bottom:1px solid var(--rule);display:flex;gap:12px;counter-increment:c}
+.courses li::before{content:counter(c,decimal-leading-zero);font-family:var(--mono);font-size:.75rem;color:var(--muted);padding-top:3px}
+.awards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.award{border:1px solid var(--rule);border-radius:6px;padding:16px;background:var(--sheet)}
+.award .y{font-family:var(--mono);font-size:.78rem;color:var(--orchid)}
+.award b{display:block;margin-top:6px;font-weight:600;line-height:1.35}
+.award small{display:block;color:var(--muted);margin-top:6px}
+
+/* contact */
+.contact{margin-top:64px;background:var(--ink);color:var(--paper)}
+.contact .wrap{padding-block:52px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:40px}
+.contact h2{font-size:clamp(1.8rem,3.4vw,2.5rem)}
+.contact p{color:color-mix(in srgb,var(--paper) 78%,transparent);margin-top:12px;max-width:52ch}
+.contact .eyebrow{color:color-mix(in srgb,var(--paper) 65%,transparent)}
+.cbox{display:grid;gap:14px;align-content:start}
+.crow{border:1px solid color-mix(in srgb,var(--paper) 25%,transparent);border-radius:8px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.crow div{min-width:0}
+.crow small{display:block;font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:color-mix(in srgb,var(--paper) 60%,transparent)}
+.crow span{display:block;word-break:break-word;user-select:all}
+.crow button{flex:none;background:var(--paper);color:var(--ink);border:0;border-radius:6px;padding:7px 12px;font:inherit;font-size:.8rem;font-weight:600;cursor:pointer}
+.contact a{color:var(--paper)}
+.plinks{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:22px}
+@media (max-width:760px){.contact .wrap{grid-template-columns:1fr}}
+
+/* photos */
+.mount{position:relative;padding:10px 0 0 10px}
+.photo{position:relative;margin:0;background:var(--sheet);padding:10px 10px 12px;border:1px solid var(--rule);box-shadow:0 22px 50px -30px rgba(22,48,42,.55);transform:rotate(1.2deg);max-width:420px;margin-left:auto}
+.photo img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 20%}
+.photo::before,.photo::after{content:"";position:absolute;width:64px;height:18px;background:color-mix(in srgb,var(--pollen) 30%,transparent);z-index:2}
+.photo::before{top:-8px;left:-14px;transform:rotate(-38deg)}
+.photo::after{top:-8px;right:-14px;transform:rotate(38deg)}
+.mount .specimen{margin:-70px 30px 0 0;position:relative;z-index:3;transform:rotate(-1deg);max-width:380px}
+.mount .specimen::before,.mount .specimen::after{display:none}
+@media (max-width:860px){.photo{margin-inline:auto;max-width:340px}.mount .specimen{margin:-50px auto 0;max-width:360px}}
+.banner{position:relative;margin-top:64px;min-height:440px;display:flex;align-items:flex-end;color:#f4f8f2;overflow:hidden;background:#1d3a2f}
+.banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.banner::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,26,20,0) 35%,rgba(10,26,20,.82) 100%)}
+.banner .wrap{position:relative;z-index:1;width:100%;padding-block:36px}
+.banner .eyebrow{color:rgba(244,248,242,.8)}
+.banner h2{font-size:clamp(1.7rem,3.6vw,2.6rem);margin-top:8px;max-width:22ch}
+.banner p{margin-top:10px;max-width:56ch;color:rgba(244,248,242,.88)}
+.strip{margin-top:56px;position:relative}
+.strip img{display:block;width:100%;height:clamp(160px,24vw,320px);object-fit:cover}
+.strip figcaption{position:absolute;right:max(16px,env(safe-area-inset-right,0px));bottom:12px;font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:#f4f8f2;background:rgba(10,26,20,.55);padding:4px 8px;border-radius:4px}
+.sidephoto{margin:0}
+.sidephoto img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:4px;border:1px solid var(--rule)}
+.sidephoto figcaption{font-size:.78rem;color:var(--muted);margin-top:8px}
+@media (max-width:860px){.sidephoto{max-width:200px}}
+.gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:220px;gap:10px}
+.gallery button{all:unset;position:relative;cursor:zoom-in;overflow:hidden;border-radius:4px;background:var(--rule)}
+.gallery button:focus-visible{outline:2px solid var(--orchid);outline-offset:2px}
+.gallery img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.gallery button:hover img{transform:scale(1.04)}
+.gallery span{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 10px;font-size:.8rem;color:#f4f8f2;background:linear-gradient(transparent,rgba(10,26,20,.75))}
+.gallery .g-big{grid-column:span 2;grid-row:span 2}
+.gallery .g-wide{grid-column:span 2}
+@media (max-width:760px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:160px}.gallery .g-big{grid-row:span 1}}
+.lb{position:fixed;inset:0;z-index:50;background:rgba(6,14,11,.92);display:grid;place-items:center;padding:max(20px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(20px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.lb figure{margin:0;max-width:min(1200px,100%);text-align:center}
+.lb img{max-height:80vh;max-width:100%;border-radius:4px}
+.lb figcaption{color:#e4ece6;margin-top:10px;font-size:.9rem}
+.lb .x{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:max(14px,env(safe-area-inset-right,0px));background:rgba(255,255,255,.12);color:#fff;border:0;border-radius:6px;padding:8px 12px;font:inherit;cursor:pointer}
+.contact{position:relative;overflow:hidden}
+.contact > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.32}
+.contact::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--ink) 30%,color-mix(in srgb,var(--ink) 55%,transparent))}
+.contact .wrap{position:relative;z-index:1}
+
+/* ===== section system ===== */
+.sec{--sc:var(--c-profil);background:color-mix(in srgb,var(--sc) 6%,var(--paper));border-top:1px solid color-mix(in srgb,var(--sc) 18%,var(--rule));padding-block:64px 64px!important}
+.sec:nth-of-type(even){background:color-mix(in srgb,var(--sc) 2.5%,var(--paper))}
+.sec .sh{align-items:start}
+.num{display:flex;flex-direction:column;gap:8px}
+.num span{display:grid;place-items:center;width:56px;height:56px;border-radius:14px;background:var(--sc);color:var(--paper);font-family:var(--display);font-size:1.4rem}
+.num em{font-style:normal;font-family:var(--mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sc)}
+.sec h2{color:var(--ink)}
+.sec h2::after{content:"";display:block;width:56px;height:4px;border-radius:2px;background:var(--sc);margin-top:14px}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.facts span{font-size:.8rem;font-weight:600;padding:5px 12px;border-radius:999px;background:color-mix(in srgb,var(--sc) 13%,var(--sheet));color:color-mix(in srgb,var(--sc) 75%,var(--ink));border:1px solid color-mix(in srgb,var(--sc) 28%,transparent)}
+@media (max-width:860px){.num{flex-direction:row;align-items:center}.num span{width:44px;height:44px;font-size:1.15rem;border-radius:11px}}
+.sec .rec{border-top-color:color-mix(in srgb,var(--sc) 35%,var(--rule))}
+.sec .rec .y{color:var(--sc);font-weight:500}
+.sec .side .eyebrow{color:var(--sc)}
+.sec .tag.loc,.sec .tag.role{color:var(--sc)}
+.rec li.grp{display:block;padding:18px 0 8px;border-bottom:2px solid var(--sc)}
+.rec li.grp b{font-family:var(--display);font-weight:400;font-size:1.35rem;color:var(--sc)}
+.rec li.grp small{margin-left:10px;color:var(--muted);font-size:.8rem}
+.sec .seg button[aria-pressed="true"]{background:var(--sc);border-color:var(--sc);color:var(--paper)}
+.sec .spark i{background:var(--sc)}
+.sec .chip{border-color:color-mix(in srgb,var(--sc) 30%,var(--rule))}
+.sec .chip:nth-child(5n+1){background:color-mix(in srgb,var(--c-profil) 12%,var(--sheet))}
+.sec .chip:nth-child(5n+2){background:color-mix(in srgb,var(--c-riset) 12%,var(--sheet))}
+.sec .chip:nth-child(5n+3){background:color-mix(in srgb,var(--c-pub) 12%,var(--sheet))}
+.sec .chip:nth-child(5n+4){background:color-mix(in srgb,var(--c-buku) 14%,var(--sheet))}
+.sec .chip:nth-child(5n+5){background:color-mix(in srgb,var(--c-ajar) 12%,var(--sheet))}
+.block h3{color:var(--sc)}
+.edu .y{color:var(--sc)}
+.roles li::before{border-color:var(--sc)}
+.courses li::before{color:var(--sc);font-weight:500}
+.courses li:hover{color:var(--sc)}
+.award{border-top:4px solid var(--sc)}
+.award .y{color:var(--sc)}
+.book{--bc:var(--c-buku);border-left-color:var(--bc)!important;background:linear-gradient(90deg,color-mix(in srgb,var(--bc) 10%,var(--sheet)),var(--sheet) 60%)}
+.book:nth-child(6n+1){--bc:var(--c-buku)}.book:nth-child(6n+2){--bc:var(--c-profil)}.book:nth-child(6n+3){--bc:var(--c-hki)}
+.book:nth-child(6n+4){--bc:var(--c-riset)}.book:nth-child(6n+5){--bc:var(--c-abdi)}.book:nth-child(6n){--bc:var(--c-ajar)}
+.book .eyebrow{color:var(--bc)}
+.kind{display:inline-block;font-size:.75rem;font-weight:600;padding:3px 9px;border-radius:999px;white-space:nowrap;background:color-mix(in srgb,var(--kc) 14%,var(--sheet));color:color-mix(in srgb,var(--kc) 80%,var(--ink))}
+.sec .tbl{border-color:color-mix(in srgb,var(--sc) 25%,var(--rule))}
+.sec th{background:color-mix(in srgb,var(--sc) 9%,var(--sheet));color:color-mix(in srgb,var(--sc) 70%,var(--ink))}
+/* nav dots */
+nav.idx a{display:inline-flex;align-items:center;gap:6px}
+nav.idx a::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--dc,var(--muted))}
+nav.idx a.on{background:color-mix(in srgb,var(--dc) 14%,transparent)}
+/* index tiles */
+.toc-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:14px}
+.toc-h h2{font-size:1.5rem}
+.toc-h span{font-size:.85rem;color:var(--muted)}
+.tile{--tc:var(--c-profil);border-top:4px solid var(--tc);position:relative}
+.tile .n{color:var(--tc)}
+.tile:hover{background:color-mix(in srgb,var(--tc) 10%,var(--sheet))}
+.tile:hover .n{color:var(--tc)}
+.tile .k{position:absolute;top:14px;right:16px;font-family:var(--mono);font-size:.72rem;color:var(--tc)}
+.tiles{background:none;border:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;overflow:visible}
+.tiles .tile{border:1px solid var(--rule);border-top:4px solid var(--tc);border-radius:6px}
+@media (max-width:860px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:860px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.tiles .tile:first-child{grid-column:span 2}}
+/* metrics colour markers */
+.metric b{position:relative}
+.metric:nth-child(1) b{color:var(--c-profil)}.metric:nth-child(2) b{color:var(--c-riset)}.metric:nth-child(3) b{color:var(--c-pub)}
+.metric:nth-child(4) b{color:var(--c-buku)}.metric:nth-child(5) b{color:var(--c-hki)}.metric:nth-child(6) b{color:var(--c-ajar)}
+footer{background:var(--ink);color:color-mix(in srgb,var(--paper) 60%,transparent);font-size:.78rem;border-top:1px solid color-mix(in srgb,var(--paper) 15%,transparent)}
+footer .wrap{padding-block:18px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
+</style>
+
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Kembali ke atas"><span class="mark">RF</span><b>Refa Firgiyanto</b></a>
+    <nav class="idx" aria-label="Navigasi bagian">
+      <a href="#profil" style="--dc:var(--c-profil)">Profil</a>
+      <a href="#penelitian" style="--dc:var(--c-riset)">Penelitian</a>
+      <a href="#publikasi" style="--dc:var(--c-pub)">Publikasi</a>
+      <a href="#buku" style="--dc:var(--c-buku)">Buku</a>
+      <a href="#hki" style="--dc:var(--c-hki)">HKI</a>
+      <a href="#pengabdian" style="--dc:var(--c-abdi)">Pengabdian</a>
+      <a href="#pengajaran" style="--dc:var(--c-ajar)">Pengajaran</a>
+      <a href="#galeri" style="--dc:var(--c-galeri)">Galeri</a>
+      <a href="#penghargaan" style="--dc:var(--c-award)">Penghargaan</a>
+      <a href="#kontak">Kontak</a>
+    </nav>
+    <button class="theme" id="themeBtn" type="button" aria-label="Ganti tema terang/gelap">◐</button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Situs Pribadi · Personal Site</div>
+        <h1>Refa Firgiyanto</h1>
+        <div class="cred">Ir., S.P., M.Si. — Lektor, Agronomi dan Hortikultura</div>
+        <p class="lede">Dosen dan peneliti di Jurusan Produksi Pertanian, Politeknik Negeri Jember. Riset saya berfokus pada budidaya dan perbanyakan tanaman hortikultura, kultur jaringan, nutrisi tanaman berbasis bahan organik, serta pertanian presisi dan energi terbarukan untuk petani.</p>
+        <p class="lede">Saat ini menjabat Kepala UPA Pengembangan Pertanian Terpadu (PTT) Polije, yang menaungi Teaching Factory kampus.</p>
+        <div class="links">
+          <a class="btn primary" href="https://scholar.google.com/citations?hl=en&amp;user=1ZRCtA8AAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.9V17h2V9L12 3zm-6.8 9.6V16c0 1.8 3 3.5 6.8 3.5s6.8-1.7 6.8-3.5v-3.4L12 16.3l-6.8-3.7z"/></svg>Google Scholar</a>
+          <a class="btn" href="https://sinta.kemdiktisaintek.go.id/authors/profile/6096230" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg>SINTA</a>
+          <a class="btn" href="https://web.facebook.com/refa.firgiyanto" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8V6.2c0-.8.2-1.2 1.4-1.2H17V2h-2.6C11.3 2 10.5 3.6 10.5 6v2H8v3h2.5v11H14V11h2.6l.4-3H14z"/></svg>Facebook</a>
+          <a class="btn" href="#kontak">Buat janji temu</a>
+        </div>
+      </div>
+
+      <div class="mount">
+        <figure class="photo"><img src="img/potret.jpg" alt="Foto Refa Firgiyanto mengenakan jas almamater Politeknik Negeri Jember" width="540" height="675"></figure>
+        <aside class="specimen" aria-label="Ringkasan identitas">
+        <div class="hd"><span>Politeknik Negeri Jember</span><span>No. 0726039002</span></div>
+        <dl>
+          <dt>Nama</dt><dd>Ir. Refa Firgiyanto, S.P., M.Si.</dd>
+          <dt>Jabatan</dt><dd>Lektor · Penata Tk. I (III/d)</dd>
+          <dt>Bidang</dt><dd>Agronomi dan Hortikultura</dd>
+          <dt>Unit</dt><dd>Jurusan Produksi Pertanian · Prodi D3 Produksi Tanaman Hortikultura</dd>
+          <dt>NIDN</dt><dd class="mono">0726039002</dd>
+          <dt>SINTA ID</dt><dd class="mono">6096230</dd>
+        </dl>
+      </aside>
+      </div>
+    </div>
+  </section>
+
+  <div class="metrics" aria-label="Metrik sitasi">
+    <div class="wrap">
+      <div class="metric"><b>1.001</b><span>Sitasi Google Scholar</span></div>
+      <div class="metric"><b>15</b><span>h-index Scholar</span></div>
+      <div class="metric"><b>25</b><span>i10-index Scholar</span></div>
+      <div class="metric"><b>25</b><span>Dokumen Scopus</span></div>
+      <div class="metric"><b>4</b><span>h-index Scopus</span></div>
+      <div class="metric"><b>2.437</b><span>Skor SINTA</span></div>
+      <p class="src mono">Sumber: profil SINTA 6096230, dilihat 28 Oktober 2026. Daftar karya di bawah dari biodata per Juni 2026.</p>
+    </div>
+  </div>
+
+  <section class="s" aria-label="Indeks koleksi">
+    <div class="wrap">
+      <div class="toc-h"><h2>Daftar isi</h2><span>Pilih bagian untuk langsung menuju ke sana</span></div>
+      <div class="tiles" id="tiles"></div>
+    </div>
+  </section>
+
+  <section class="banner" aria-label="Kebun inovasi">
+    <img src="img/kebun-dataran-tinggi.jpg" alt="Foto udara greenhouse dan kebun bertingkat di dataran tinggi" loading="lazy">
+    <div class="wrap">
+      <div class="eyebrow">Laboratorium lapangan</div>
+      <h2>Dari greenhouse ke kebun petani</h2>
+      <p>Greenhouse dan kebun bertingkat ini menjadi tempat praktik mahasiswa dan uji lapang riset hortikultura, dari perbanyakan bibit krisan sampai budidaya jeruk.</p>
+    </div>
+  </section>
+
+  <section class="s sec" id="profil" style="--sc:var(--c-profil)">
+    <div class="wrap">
+      <div class="sh"><div class="num"><span>01</span><em>Profil</em></div><div><h2>Tentang saya</h2><div class="facts"><span>S2 Institut Pertanian Bogor</span><span>Lektor · III/d</span><span>Kepala UPA PTT Polije</span><span>SINTA ID 6096230</span></div></div></div>
+      <div class="body">
+        <div class="side"><figure class="sidephoto"><img src="img/toga.jpg" alt="Refa Firgiyanto mengenakan toga" loading="lazy" width="540" height="675"><figcaption>Ir. Refa Firgiyanto, S.P., M.Si.</figcaption></figure></div>
+        <div>
+          <div class="prose">
+            <p>Saya menempuh S1 Agroteknologi di Universitas Jenderal Soedirman dan S2 Agronomi dan Hortikultura di Institut Pertanian Bogor. Di Politeknik Negeri Jember saya membina mahasiswa D3 Produksi Tanaman Hortikultura dan mengelola kebun praktik serta Teaching Factory (TEFA) kampus.</p>
+            <p>Penelitian saya berangkat dari kebutuhan lapangan: memperbaiki teknik perbanyakan krisan, anggrek Vanda, pisang, dan nanas secara in vitro; memanfaatkan pupuk organik, biochar, dan mikroba tanah untuk tanaman hortikultura dan pegagan; serta menerapkan pertanian presisi berbasis IoT, kecerdasan buatan, dan tenaga surya bersama mitra industri dan kelompok tani. Hasilnya saya bawa kembali ke masyarakat melalui pengabdian di sentra jeruk, durian, mangga, kopi, dan jamur di Jember dan sekitarnya.</p>
+          </div>
+          <div class="cols">
+            <div class="block">
+              <h3>Pendidikan</h3>
+              <ul class="edu">
+                <li><span class="y">2013–2015</span><div><b>S2 Agronomi dan Hortikultura</b><small>Institut Pertanian Bogor</small><i>Tesis: Pertumbuhan dan ketahanan terhadap penyakit busuk lunak pada anggrek Phalaenopsis dengan pemupukan dan asam salisilat</i></div></li>
+                <li><span class="y">2008–2012</span><div><b>S1 Agroteknologi</b><small>Universitas Jenderal Soedirman</small><i>Skripsi: Kajian pertumbuhan bibit belimbing (Averrhoa carambola L.) pada pemberian beberapa dosis pupuk majemuk NPK dan pupuk daun</i></div></li>
+              </ul>
+            </div>
+            <div class="block">
+              <h3>Jabatan dan peran</h3>
+              <ul class="roles">
+                <li>Kepala UPA Pengembangan Pertanian Terpadu (PTT)<br><small>Politeknik Negeri Jember</small></li>
+                <li>Lektor, bidang Agronomi dan Hortikultura<br><small>Jurusan Produksi Pertanian</small></li>
+                <li>Editor in Chief, Agrimas: Jurnal Pengabdian Masyarakat Bidang Pertanian<br><small>2022–2024</small></li>
+                <li>Reviewer Program Kreativitas Mahasiswa (PKM) Nasional<br><small>Direktorat Jenderal Pendidikan Vokasi, 2022–2024</small></li>
+              </ul>
+            </div>
+          </div>
+          <div class="block" style="margin-top:32px">
+            <h3>Bidang minat</h3>
+            <div class="chips">
+              <span class="chip">Kultur jaringan tanaman</span><span class="chip">Krisan &amp; tanaman hias</span><span class="chip">Anggrek Vanda</span>
+              <span class="chip">Buah tropis: jeruk, durian, mangga</span><span class="chip">Tanaman obat (pegagan)</span><span class="chip">Pupuk organik &amp; biochar</span>
+              <span class="chip">Mikroba tanah &amp; PGPR</span><span class="chip">Teknologi benih</span><span class="chip">Hidroponik &amp; greenhouse</span>
+              <span class="chip">Smart farming, IoT &amp; AI</span><span class="chip">Energi surya untuk pertanian</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="s sec" id="penelitian" style="--sc:var(--c-riset)">
+    <div class="wrap">
+      <div class="sh"><div class="num"><span>02</span><em>Penelitian</em></div><div><h2>Proyek penelitian</h2><p>Penelitian yang saya ketuai atau ikuti sejak 2017, dari hibah internal Polije sampai skema kompetitif nasional dan Matching Fund Vokasi bersama industri.</p><div class="facts"><span>17 proyek</span><span>7 skema nasional/industri</span><span>10 hibah internal</span><span>2017–2025</span></div></div></div>
+      <div class="body"><div class="side" id="resSide"></div><div><ul class="rec" id="resList"></ul></div></div>
+    </div>
+  </section>
+
+  <figure class="strip"><img src="img/gedung-utama.jpg" alt="Gedung utama Politeknik Negeri Jember dan lapangan rumput di depannya" loading="lazy"><figcaption>Politeknik Negeri Jember</figcaption></figure>
+
+  <section class="s sec" id="publikasi" style="--sc:var(--c-pub)">
+    <div class="wrap">
+      <div class="sh"><div class="num"><span>03</span><em>Publikasi</em></div><div><h2>Artikel ilmiah</h2><p>Artikel jurnal dan prosiding, dikelompokkan per tahun dengan yang terbaru di atas. Artikel bertanda kuartil terindeks Scopus menurut SINTA.</p><div class="facts"><span>84 artikel</span><span>26 penulis pertama/korespondensi</span><span>10 terindeks Scopus</span><span>10 makalah seminar</span></div></div></div>
+      <div class="body">
+        <div class="side">
+          <div class="eyebrow" style="margin-bottom:6px">Artikel per tahun</div>
+          <div class="spark" id="pubSpark"></div>
+        </div>
+        <div>
+          <div class="tools">
+            <label for="pubQ" class="eyebrow" style="position:absolute;left:-9999px">Cari publikasi</label>
+            <input id="pubQ" type="search" placeholder="Cari judul atau jurnal, mis. krisan, pegagan, IoT">
+            <div class="seg" id="pubRole" role="group" aria-label="Saring peran">
+              <button type="button" data-v="all" aria-pressed="true">Semua</button>
+              <button type="button" data-v="first" aria-pressed="false">Penulis pertama/korespondensi</button>
+              <button type="button" data-v="q" aria-pressed="false">Scopus</button>
+            </div>
+          </div>
+          <div class="seg" id="pubYear" role="group" aria-label="Saring tahun" style="margin-bottom:14px"></div>
+          <div class="count" id="pubCount"></div>
+          <ul class="rec" id="pubList"></ul>
+          <button class="more" id="pubMore" type="button">Tampilkan semua</button>
+
+          <h3 style="font-size:1.25rem;margin:44px 0 12px">Pemakalah seminar ilmiah</h3>
+          <ul class="rec" id="confList"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="s sec" id="buku" style="--sc:var(--c-buku)">
+    <div class="wrap">
+      <div class="sh"><div class="num"><span>04</span><em>Buku</em></div><div><h2>Karya buku</h2><p>Buku ajar dan buku referensi, ditulis sendiri atau bersama penulis lain.</p><div class="facts"><span>24 judul ber-ISBN</span><span>4 penerbit</span><span>2020–2026</span></div></div></div>
+      <div class="books" id="bookList"></div>
+    </div>
+  </section>
+
+  <section class="s sec" id="hki" style="--sc:var(--c-hki)">
+    <div class="wrap">
+      <div class="sh"><div class="num"><span>05</span><em>Kekayaan intelektual</em></div><div><h2>Hak cipta terdaftar</h2><p>Ciptaan yang tercatat di Direktorat Jenderal Kekayaan Intelektual (DJKI): program komputer, modul pelatihan, buku, video, dan desain.</p><div class="facts"><span>30 ciptaan</span><span>7 program komputer</span><span>7 modul</span><span>2020–2025</span></div></div></div>
+      <div class="seg" id="hkiKind" role="group" aria-label="Saring jenis ciptaan" style="margin-bottom:14px"></div>
+      <div class="tbl"><table><thead><tr><th>Tahun</th><th>Judul ciptaan</th><th>Jenis</th><th>Nomor pencatatan</th></tr></thead><tbody id="hkiBody"></tbody></table></div>
+    </div>
+  </section>
+
+  <section class="s sec" id="pengabdian" style="--sc:var(--c-abdi)">
+    <div class="wrap">
+      <div class="sh"><div class="num"><span>06</span><em>Pengabdian</em></div><div><h2>Pengabdian kepada masyarakat</h2><p>Pendampingan kelompok tani, UMKM, pesantren, dan kader posyandu.</p><div class="facts"><span>16 kegiatan</span><span>Jember · Probolinggo · Tuban</span><span>2017–2025</span></div></div></div>
+      <div class="body"><div class="side"></div><div><ul class="rec" id="srvList"></ul></div></div>
+    </div>
+  </section>
+
+  <section class="s sec" id="pengajaran" style="--sc:var(--c-ajar)">
+    <div class="wrap">
+      <div class="sh"><div class="num"><span>07</span><em>Pengajaran</em></div><div><h2>Mata kuliah yang diampu</h2><p>Di Program Studi D3 Produksi Tanaman Hortikultura dan program terkait di Jurusan Produksi Pertanian.</p><div class="facts"><span>13 mata kuliah</span><span>20 lulusan D3 dibimbing</span></div></div></div>
+      <ol class="courses">
+        <li>Pengantar Ilmu Pertanian</li><li>Dasar Budidaya Tanaman Hortikultura</li><li>Pembiakan Tanaman Hortikultura</li>
+        <li>Manajemen Air dan Hara</li><li>Budidaya Tanaman Hias</li><li>Budidaya Tanaman Buah Semusim</li>
+        <li>Teknologi Benih</li><li>Hidroponik</li><li>Budidaya Tanaman Buah Tahunan</li>
+        <li>Budidaya Sayuran</li><li>Pertanian Organik</li><li>Agroinformatika</li><li>Agroteknologi</li>
+      </ol>
+
+    </div>
+  </section>
+
+  <section class="s sec" id="penghargaan" style="--sc:var(--c-award)">
+    <div class="wrap">
+      <div class="sh"><div class="num"><span>08</span><em>Penghargaan</em></div><div><h2>Penghargaan dan pengakuan</h2><div class="facts"><span>6 penghargaan</span><span>2020–2024</span></div></div></div>
+      <div class="awards">
+        <div class="award"><span class="y">2023</span><b>Dosen Terbaik</b><small>Jurusan Produksi Pertanian, Politeknik Negeri Jember</small></div>
+        <div class="award"><span class="y">2022</span><b>Kaprodi dan Dosen Terbaik</b><small>Jurusan Produksi Pertanian, Politeknik Negeri Jember</small></div>
+        <div class="award"><span class="y">2021</span><b>Kaprodi dan Dosen Terbaik</b><small>Jurusan Produksi Pertanian, Politeknik Negeri Jember</small></div>
+        <div class="award"><span class="y">2022–2024</span><b>Reviewer PKM Nasional</b><small>Direktorat Jenderal Pendidikan Vokasi</small></div>
+        <div class="award"><span class="y">2022–2024</span><b>Editor in Chief, Jurnal Pengabdian Agrimas</b><small>Politeknik Negeri Jember</small></div>
+        <div class="award"><span class="y">2020</span><b>Peserta Latsar CPNS Terbaik 1</b><small>Kemendikbud</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="s sec" id="galeri" style="--sc:var(--c-galeri)">
+    <div class="wrap">
+      <div class="sh"><div class="num"><span>09</span><em>Galeri</em></div><div><h2>Kampus dan lahan praktik</h2><p>Lingkungan tempat saya mengajar dan meneliti di Politeknik Negeri Jember. Ketuk foto untuk memperbesar.</p><div class="facts"><span>Politeknik Negeri Jember</span></div></div></div>
+      <div class="gallery" id="gallery">
+        <button type="button" class="g-big" data-src="img/lahan-kampus.jpg"><img src="img/lahan-kampus.jpg" alt="Foto udara lahan praktik, kebun, dan greenhouse di kampus Polije" loading="lazy"><span>Lahan praktik dan greenhouse kampus</span></button>
+        <button type="button" class="g-wide" data-src="img/gedung-jpp.jpg"><img src="img/gedung-jpp.jpg" alt="Gedung Jurusan Produksi Pertanian" loading="lazy"><span>Gedung Jurusan Produksi Pertanian</span></button>
+        <button type="button" data-src="img/tugu-siang.jpg"><img src="img/tugu-siang.jpg" alt="Tugu Politeknik Negeri Jember di bundaran kampus" loading="lazy"><span>Tugu Polije</span></button>
+        <button type="button" data-src="img/toga-jempol.jpg"><img src="img/toga-jempol.jpg" alt="Refa Firgiyanto mengenakan toga sambil mengacungkan jempol" loading="lazy" style="object-position:50% 15%"><span>Refa Firgiyanto</span></button>
+      </div>
+    </div>
+  </section>
+
+  <div class="lb" id="lb" hidden><button type="button" class="x" id="lbx">Tutup ✕</button><figure><img id="lbimg" alt=""><figcaption id="lbcap"></figcaption></figure></div>
+
+  <section class="contact" id="kontak">
+    <img src="img/tugu-senja.jpg" alt="" loading="lazy">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Kontak</div>
+        <h2 style="margin-top:10px">Buat janji temu</h2>
+        <p>Untuk undangan narasumber, seminar, ujian, kerja sama riset, atau konsultasi budidaya hortikultura, silakan kirim email dengan menyebutkan tanggal, tempat, dan topik kegiatan.</p>
+        <div class="plinks">
+          <a href="https://scholar.google.com/citations?hl=en&amp;user=1ZRCtA8AAAAJ" target="_blank" rel="noopener">Google Scholar ↗</a>
+          <a href="https://sinta.kemdiktisaintek.go.id/authors/profile/6096230" target="_blank" rel="noopener">SINTA ↗</a>
+          <a href="https://web.facebook.com/refa.firgiyanto" target="_blank" rel="noopener">Facebook ↗</a>
+          <a href="https://polije.ac.id" target="_blank" rel="noopener">Politeknik Negeri Jember ↗</a>
+        </div>
+      </div>
+      <div class="cbox">
+        <div class="crow"><div><small>Email</small><span id="em">refa_firgiyanto@polije.ac.id</span></div><button type="button" data-copy="em">Salin</button></div>
+        <div class="crow"><div><small>Kantor</small><span>Jurusan Produksi Pertanian, Politeknik Negeri Jember<br>Jl. Mastrip Kotak Pos 164, Jember 68101</span></div></div>
+        <div class="crow"><div><small>Telepon kantor</small><span id="tel">(0331) 333532</span></div><button type="button" data-copy="tel">Salin</button></div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap"><span>© 2026 Refa Firgiyanto · Politeknik Negeri Jember</span><span>Diperbarui Oktober 2026</span></div></footer>
+
+<script>
+const D = {"pubs":[{"t":"Morphological characterization of flowering in local shallot (Allium cepa L.) varieties in the lowlands region of Jember","r":"a","v":"BIO Web of Conferences 210, 02034 (2026)","u":"https://www.bio-conferences.org/articles/bioconf/abs/2026/03/bioconf_icofa2026_02034/bioconf_icofa2026_02034.html","y":2026,"q":"Q4"},{"t":"The effectiveness of the interval of liquid organic fertilizer application of goat urine and different planting media on the growth and yield of goat asiatica (Centella asiatica L.)","r":"fc","v":"BIO Web of Conferences 210, 02014 (2026). 10","u":"https://www.bio-conferences.org/articles/bioconf/abs/2026/03/bioconf_icofa2026_02014/bioconf_icofa2026_02014.html","y":2026,"q":"Q4"},{"t":"Innovative integration of solar energy and pyrolysis technology in fish smoking for improved liquid smoke yield and quality","r":"a","v":"Mechanical Engineering for Society and Industry Vol. 6, No. 1 (2026) pp 180-193 https://doi.org/10.31603/mesi.15162","u":"https://journal.unimma.ac.id/mesi/article/view/14931/6749","y":2026,"q":"Q2"},{"t":"The Effect Of Combination Of Plant Media And Npk Fertilizer Concentration On The Growth And Development Of White Reagent Variety Pot Chrisan (Dendrathema grandiflora)","r":"fc","v":"JURNAL AGROTEK TROPIKA Vol. 14 No. 2 (2026)","u":"https://jurnal.fp.unila.ac.id/index.php/JA/article/view/8361","y":2026},{"t":"The Effect of Rabbit Urine and Cow Manure Application on The Growth and Yield of Centella asiatica L.","r":"fc","v":"Agrium: Jurnal Ilmu Pertanian Vol 29 No. 1 (2026)","u":"https://jurnal.umsu.ac.id:444/index.php/agrium/article/view/26229","y":2026},{"t":"Optimizing Shallot (Allium ascalonicum L.) Productivity in Sandy Soil Through Integrated Organic and Biological Amendments: Evidence of an Optimum Treatment Combination","r":"","v":"International Journal of Design and Nature and Ecodynamics, 2026","u":"","y":2026,"q":"Q2"},{"t":"Test of the superiority of several soybean (Glycine max (L.) Merril) pure lines","r":"a","v":"2025 IOP Conf. Ser.: Earth Environ. Sci. 1446 012009","u":"https://iopscience.iop.org/article/10.1088/1755-1315/1446/1/012009/meta","y":2025,"q":"Q3"},{"t":"Efektifitas Beberapa Jenis Pupuk Organik Dengan Dosis Yang Berbeda Pada Bibit Tanaman ManggaVarietas Garifta Merah","r":"a","v":"Vol. 10 No. 2 (2025): JURNAL AGROSAINS : Karya Kreatif dan Inovatif","u":"https://journal.uim.ac.id/index.php/agrosains/article/view/2708","y":2025},{"t":"IS4AC (Intelligence System for Air Controller) Application for Air Quality Control of Tobacco Storage Warehouse PT. Mangli Djaya Raya","r":"a","v":"International Journal of Technology, Food and Agriculture, 2(1), 50–61. 2025","u":"https://publikasi.polije.ac.id/tefa/article/view/5661","y":2025},{"t":"Tomato Growth and Production under Different Concentrations of Weed Extract-Based Biostimulant in Dry Season","r":"a","v":"International Journal of Technology, Food and Agriculture, 2(2), 107–114. 2025","u":"https://publikasi.polije.ac.id/tefa/article/view/6120","y":2025},{"t":"Pengembangan Produk Kopi Herbal Berbasis Rempah Lokal Sebagai Strategi Peningkatan Daya Saing Usaha Mikro di Kabupaten Jember","r":"a","v":"Jurnal Hasil Pengabdian Masyarakat (JURIBMAS), 4(1), 122–130. 2025","u":"https://ejurnal.lkpkaryaprima.id/index.php/juribmas/article/view/430","y":2025},{"t":"Pemanfaatan Daun Tembakau dan Mengkudu sebagai Moluskisida Nabati Keong Mas di Kelompok Tani Sumber Rejeki, Desa Antirogo, Kabupaten Jember","r":"a","v":"Jurnal Pengabdian Masyarakat Dan Riset Pendidikan, 4(1), 1766–1771. 2025","u":"https://jerkin.org/index.php/jerkin/article/view/1629","y":2025},{"t":"In vitro growth of Dendrobium orchid on different concentrations of sucrose and myo-inositol","r":"a","v":"AGROMIX, Volume 16 Number 2 (2025), Pages 277–284","u":"https://jurnal.yudharta.ac.id/v2/index.php/AGROMIX/article/view/6212","y":2025},{"t":"Pengaruh Dosis Pupuk NPK dan Zat Pengatur Tumbuh terhadap Kesuburan Tanah, Kadar Fenolik dan Perkembangan Bunga Krisan Pada Dataran Rendah","r":"fc","v":"Vegetalika Vol. 14 No. 4, November 2025: 306–322","u":"https://journal.ugm.ac.id/jbp/article/view/108934","y":2025},{"t":"Akselerasi Budidaya Jeruk Berkelanjutan di Kelompok Tani Ngudi Rejeki berbasis Kolaborasi dengan TEFA Kebun Inovasi Politeknik Negeri Jember","r":"f","v":"Jurnal Hasil Pengabdian Masyarakat (JURIBMAS), 4(2), 502–510.","u":"https://ejurnal.lkpkaryaprima.id/index.php/juribmas/article/view/709","y":2025},{"t":"Pemanfaatan Inovatif Limbah Kulit Durian Sebagai Bahan Arang Aktif oleh Kelompok Tani Hutan Santoso di Klungkung, Jember","r":"a","v":"Jurnal Pengabdian Literasi Digital Indonesia, 4(2), 203–210. 2025","u":"https://journal.artika.id/index.php/abdimas/article/view/176","y":2025},{"t":"Inovasi Pemanfaatan Limbah Kulit Durian Sebagai Arang Aktif Di Kelompok Tani Hutan Santoso, Klungkung, Jember","r":"a","v":"j-dinamika, vol. 10, no. 3, pp. 500–508, Dec. 2025.","u":"https://publikasi.polije.ac.id/j-dinamika/article/view/6606","y":2025},{"t":"Penerapan Teknologi BUJANGSETA (Buah Berjenjang Sepanjang Tahun) Dalam Keberhasilan Pengembangan Sentra Agribisnis Jeruk di Kabupaten Jember","r":"a","v":"National Conference For Community Service, vol. 7, pp. 11-15. 2024.","u":"https://ocs.polije.ac.id/index.php/nacosvi/article/view/198","y":2024},{"t":"Optimalisasi Nutrisi, Pengendalian HPT Jeruk Siam pada Fase Generatif, serta Perbaikan Penanganan Panen, Pasca Panen, dan Kemasan di TEFA Kebun Inovasi dan Nursery, Jeju Techno Park, Politeknik Negeri Jember","r":"f","v":"In National Conference For Community Service, vol. 7, pp. 60-64. 2024.","u":"https://ocs.polije.ac.id/index.php/nacosvi/article/view/197","y":2024},{"t":"Peningkatan Pengetahuan dan Keterampilan dalam Pemasaran Berbasis Digital pada Produk Biochar dan Turunannya di UMKM Arang Sejahtera","r":"a","v":"In National Conference For Community Service, vol. 7, pp. 26-30. 2024.","u":"https://ocs.polije.ac.id/index.php/nacosvi/article/view/144","y":2024},{"t":"The abundance of soil bacteria applied with compost and Trichoderma sp. in tangerine orchard","r":"a","v":"Agromix, 15(1), 75-81. https://doi.org/10.35891/agx.v15i1.3770","u":"https://jurnal.yudharta.ac.id/v2/index.php/agromix","y":2024},{"t":"In vitro growth of different chrysanthemum cultivars on murashige and skoog medium modified with some organic additives","r":"f","v":"IOP Conf. Ser.: Earth Environ. Sci. 1338 012006 DOI: 10.1088/1755-1315/1338/1/012006","u":"https://iopscience.iop.org/article/10.1088/1755-1315/1338/1/012006/meta","y":2024,"q":"Q3"},{"t":"Respon IAA dan BAP Terhadap Multiplikasi In Vitro Tunas Tanaman Krisan Varietas Suciono (Chrysanthemum indicum L)","r":"a","v":"Al-Kauniyah: Jurnal Biologi 17, no. 2 (2024): 268-277. DOI: https://doi.org/10.15408/kauniyah.v16i2.1.27417","u":"https://journal.uinjkt.ac.id/index.php/kauniyah/article/view/27417","y":2024},{"t":"Seed germination and adaptation of several national and introduced varieties of spinach plants (Spinacia oleracea L.) in tropical lowlands","r":"a","v":"Open Science and Technology 4, no. 1 (2024): 9-18.","u":"https://opscitech.com/journal/article/view/111","y":2024},{"t":"Growth and Production Response of Cayenne Pepper to Phosphate-Solubilizing Bacteria (BPF) and Arbuscular Mycorrhizal Fungi (FMA) in Alfisol Soil in Tuban Regency","r":"a","v":"Jurnal Agronomi Tanaman Tropika (JUATIKA) Vol. 6 No. 2 May 2024 https://doi.org/10.36378/juatika.v6i2.3576","u":"https://ejournal.uniks.ac.id/index.php/JUATIKA/article/view/3576","y":2024},{"t":"Pengaruh IAA dan BAP pada Pertumbuhan Eskplan Pisang Cavendish (Musa acuminata L.) melalui Kultur In Vitro","r":"a","v":"Vegetalika Vol. 13 No. 3, Agustus 2024 : 281-289 DOI: https://doi.org/10.22146/veg.83613","u":"https://jurnal.ugm.ac.id/jbp/article/view/83613","y":2024},{"t":"Penggunaan Beberapa Jenis Media Tanam pada Tahap Aklimatisasi terhadap Pertumbuhan Plantlet Pisang Cavendish (Musa acuminata L. Var. Grand nain)","r":"a","v":"Agropross : National Conference Proceedings of Agriculture, 75–82. https://doi.org/10.25047/agropross.2024.676","u":"https://proceedings.polije.ac.id/index.php/agropross/article/view/676","y":2024},{"t":"Pengendalian Hama dan Penyakit serta Evaluasi Pertumbuhan pada Krisan Pot Menggunakan Trichoderma sp. dan Metabolit Sekunder","r":"a","v":"Agropross : National Conference Proceedings of Agriculture, 453–464. https://doi.org/10.25047/agropross.2024.759","u":"https://proceedings.polije.ac.id/index.php/agropross/article/view/759","y":2024},{"t":"Pengaruh Beberapa Jenis Modifikasi Media Murashige and Skoog Pada Pertumbuhan Eksplan Nanas MD-2 Secara In Vitro","r":"f","v":"Agropross : National Conference Proceedings of Agriculture, 70–74. https://doi.org/10.25047/agropross.2024.675","u":"https://proceedings.polije.ac.id/index.php/agropross/article/view/675","y":2024},{"t":"Pengembagan Produk Olahan Komoditas Jeruk Melalui Kegiatan Pengabdian Masayarakat Pada Kelompok Tani Ngudi Rejeki, Di Desa Pecoro, Jember","r":"a","v":"Batara Wisnu : Indonesian Journal of Community Services, 4(3), 748–755. https://doi.org/10.53363/bw.v4i3.297","u":"https://batarawisnu.gapenas-publisher.org/index.php/home/article/view/297","y":2024},{"t":"Peningkatan Kapasitas Petani melalui Transfer Teknologi dan Pengetahuan Penanganan Pasca Panen, Diversifikasi, dan Pemasaran Mangga di Kecamatan Wuluhan","r":"a","v":"Dharma Raflesia : Jurnal Ilmiah Pengembangan Dan Penerapan IPTEKS, 22(2), 336–348. https://doi.org/10.33369/dr.v22i2.36763","u":"https://ejournal.unib.ac.id/dharmaraflesia/article/view/36763","y":2024},{"t":"Capacity Building Kader Posyandu melalui Digitalisasi dan Creative Health Berbasis Ketahanan Pangan Lokal dan Inovasi Produk Ternak sebagai Percepatan Zero Stunting di Posyandu Melati Kabupaten Probolinggo","r":"a","v":"Dharma Raflesia : Jurnal Ilmiah Pengembangan Dan Penerapan IPTEKS, 22(2), 371–383. https://doi.org/10.33369/dr.v22i2.38080","u":"https://ejournal.unib.ac.id/dharmaraflesia/article/view/38080","y":2024},{"t":"Water footprint of melon production under different nutrient and plant growth regulator management","r":"a","v":"Jurnal Agronomi Indonesia (Indonesian Journal of Agronomy), 52(3), 400-409. https://doi.org/10.24831/jai.v52i3.60461","u":"https://journal.ipb.ac.id/index.php/jurnalagronomi/article/view/60461","y":2024},{"t":"Peningkatan Kemampuan Petani Dalam Pemenuhan Standar Pasar Ekspor Mangga Melalui Penerapan GAP di Kelompok Tani Margi Mulyo Kecamatan Wuluhan","r":"a","v":"Journal of Community Development, 5(3), 572–579. https://doi.org/10.47134/comdev.v5i3.1462","u":"https://comdev.pubmedia.id/index.php/comdev/article/view/1462","y":2024},{"t":"Optimalisasi Pemanfaatan Limbah Kopi Sebagai Media Subtitusi Dalam Budidaya Jamur Dan Pelatihan Teknologi Olahan Serta Pemasarannya Sebagai Penerapan Industri Kopi Berbasis Produksi Bersih Di Kecamatan Arjasa","r":"a","v":"Prosiding Seminar Nasional Terapan Riset Inovatif (SENTRINOV) 8 (3): 33-43 2023","u":"https://scholar.google.com/citations?view_op=view_citation&hl=en&user=1ZRCtA8AAAAJ&cstart=20&pagesize=80&sortby=pubdate&citation_for_view=1ZRCtA8AAAAJ:pqnbT2bcN3wC","y":2023},{"t":"Exploration of bacterial diversity from the soil of citrus plantations applied with organic fertilizer and salicylic acid","r":"a","v":"IOP Conference Series: Earth and Environmental Science. Vol. 1168. No. 1. IOP Publishing, 2023","u":"https://iopscience.iop.org/article/10.1088/1755-1315/1168/1/012019/meta","y":2023,"q":"Q3"},{"t":"Effect of modified murashige and skoog medium on chrysanthemum tissue culture","r":"f","v":"IOP Conference Series: Earth and Environmental Science. Vol. 1168. No. 1. IOP Publishing, 2023","u":"https://iopscience.iop.org/article/10.1088/1755-1315/1168/1/012008/meta","y":2023,"q":"Q3"},{"t":"Analisis Survei Kepuasan Masyarakat terhadap Pelayanan Publik Bidang Sosial di Kabupaten Jember","r":"a","v":"Aksiologi : Jurnal Pendidikan Dan Ilmu Sosial, 4(1), 25–38. https://doi.org/10.47134/aksiologi.v4i1.13","u":"https://aksiologi.pubmedia.id/index.php/aksiologi/article/view/139","y":2023},{"t":"Pengembangan Produk Olahan daun Pegagan Sebagai Makanan Pokok Tambahan (MPT) Pencegahan Stunting dan Peningkatan Ekonomi","r":"a","v":"Agrimas : Jurnal Pengabdian Masyarakat Bidang Pertanian, 2(1), 23–29. https://doi.org/10.25047/agrimas.v2i1.28 2023","u":"https://agrimas.polije.ac.id/index.php/journal/article/view/28","y":2023},{"t":"Pertumbuhan dan Hasil Tanaman Pegagan pada Aplikasi Jenis Pupuk Organik","r":"fc","v":"Jurnal Ilmu Pertanian Indonesia, 28(4), 566-571. 2023 https://doi.org/10.18343/jipi.28.4.566 2023","u":"https://journal.ipb.ac.id/index.php/JIPI/article/view/46504","y":2023},{"t":"Pemanfaatan Plant Growth Promoting Rhizobacteria Guna Mendukung Pertanian di Kecamatan Jelbuk, Kabupaten Jember","r":"a","v":"Journal of Community Development, 4(1), 85–92. https://doi.org/10.47134/comdev.v4i1.149 2023","u":"https://comdev.pubmedia.id/index.php/comdev/article/view/149","y":2023},{"t":"Respons Pertumbuhan dan Hasil Produksi Pegagan pada Pemberian Pupuk Organik Cair dan Pupuk Kandang Sapi","r":"fc","v":"Jurnal Vegetalika Vol 12 (3); DOI: https://doi.org/10.22146/veg.82789 2023","u":"https://journal.ugm.ac.id/jbp/article/view/82789","y":2023},{"t":"Penampilan Tanaman Krisan Pot (Dendranthema grandiflora) pada Pemberian Pupuk Organik dan Anorganik","r":"f","v":"Agropross : National Conference Proceedings of Agriculture, 448–457. https://doi.org/10.25047/agropross.2023.516 2023","u":"https://proceedings.polije.ac.id/index.php/agropross/article/view/516","y":2023},{"t":"Respon Pertumbuhan Bibit Alpukat terhadap Pemberian Pupuk Kandang Sapi dan NPK","r":"f","v":"Agropross : National Conference Proceedings of Agriculture, 433–440. https://doi.org/10.25047/agropross.2023.514 2023","u":"https://proceedings.polije.ac.id/index.php/agropross/article/view/514","y":2023},{"t":"Analisis Usaha Tani Pemberian Asam Amino Terhadap Hasil Tanaman Melon Honey Globe (Cucumis melo L. inodorus) Secara Hidroponik","r":"a","v":"Agropross : National Conference Proceedings of Agriculture, 238–247. https://doi.org/10.25047/agropross.2023.461 2023","u":"https://proceedings.polije.ac.id/index.php/agropross/article/view/461","y":2023},{"t":"Pertumbuhan Tanaman Anggrek Cattleya (Cattleya eximia) secara In-Vitro pada Media MS dengan Subtitusi NAA dan BAP","r":"a","v":"Agropross : National Conference Proceedings of Agriculture, 458–466. https://doi.org/10.25047/agropross.2023.517","u":"https://proceedings.polije.ac.id/index.php/agropross/article/view/517","y":2023},{"t":"Response of green lettuce (Lactuca sativa L.) by granting of biochar types and dosage of NPK fertilizer","r":"a","v":"Jurnal Agrovigor Vol 16 (1) https://doi.org/10.21107/agrovigor.v16i1.16756 2023","u":"https://journal.trunojoyo.ac.id/agrovigor/article/view/16756","y":2023},{"t":"Respon Pertumbuhan Hasil Persilangan Anggrek Vanda Sanderiana Dengan Anggrek Vanda Lombokensis Terhadap Pemberian Pupuk Daun Dan Pupuk Silika","r":"fc","v":"Agrin, 27(2), pp.140-151. http://dx.doi.org/10.20884/1.agrin.2023.27.2.710","u":"https://jurnalagrin.net/index.php/agrin/article/view/710","y":2023},{"t":"Pemberdayaan Pondok Pesantren Al- Ifadah Sumberjo yang Mandiri melalui Penerapan Sistem Agribisnis Terpadu dan Pengembangan Jiwa Wirausaha Santri melalui pemasaran berbasis e-commerce","r":"fc","v":"Dharma Raflesia : Jurnal Ilmiah Pengembangan Dan Penerapan IPTEKS, 21(2), 354 –. https://doi.org/10.33369/dr.v21i2.30349","u":"https://ejournal.unib.ac.id/dharmaraflesia/article/view/30349","y":2023},{"t":"Low-cost on-line monitoring system for agriculture based on raspberry pi zero","r":"a","v":"IOP Conference Series: Earth and Environmental Science, Volume 980, The 4th International Conference on Food and Agriculture (ICOFA), 6-7 November 2021, Jember, Indonesia 2022 IOP Conf. Ser.: Earth Environ. Sci. 980 012062","u":"https://iopscience.iop.org/article/10.1088/1755-1315/980/1/012062/meta","y":2022},{"t":"The effect of Biofertilizer Application and Shoot Pruning on the Production of chili plants on sandy media","r":"a","v":"IOP Conference Series: Earth and Environmental Science, Volume 980, The 4th International Conference on Food and Agriculture (ICOFA), 6-7 November 2021, Jember, Indonesia 2022 IOP Conf. Ser.: Earth Environ. Sci. 980 012062","u":"https://iopscience.iop.org/article/10.1088/1755-1315/980/1/012012/meta","y":2022},{"t":"The growth inducing endophyte: optimizing the non-host endophyte as growth promoter","r":"c","v":"IOP Conference Series: Earth and Environmental Science, Volume 980, The 4th International Conference on Food and Agriculture (ICOFA), 6-7 November 2021, Jember, Indonesia 2022 IOP Conf. Ser.: Earth Environ. Sci. 980 012062","u":"https://iopscience.iop.org/article/10.1088/1755-1315/980/1/012011/meta","y":2022,"q":"Q4"},{"t":"Pelatihan Pemasaran Bibit Berbasis E-Commerce sebagai Upaya Lanjutan dalam Pengembangan Sentra Durian di Desa Kemuning Lor","r":"a","v":"Agrimas: Jurnal Pengabdian Masyarakat Bidang Pertanian 1.1 (2022): 1-6","u":"https://agrimas.polije.ac.id/index.php/journal/article/view/v1i1-a","y":2022},{"t":"Intelligent detection of rice leaf diseases based on histogram color and closing morphological","r":"a","v":"Emirates Journal of Food and Agriculture, 2022","u":"https://scholar.google.com/citations?view_op=view_citation&hl=en&user=1ZRCtA8AAAAJ&sortby=pubdate&citation_for_view=1ZRCtA8AAAAJ:NMxIlDl6LWMC","y":2022,"q":"Q2"},{"t":"Pemberdayaan Masyarakat Melalui Pelatihan Budidaya Microgreen di Desa Kesilir, Kecamatan Wuluhan, Kabupaten Jember","r":"a","v":"Journal of Community Development 3.2 (2022): 183-189","u":"https://comdev.pubmedia.id/index.php/comdev/article/view/94","y":2022},{"t":"Pengaruh Penempatan Baglog dan Pemberian Komposisi Media Pada Produksi Jamur Tiram Putih (Pleurotus ostreatus)","r":"a","v":"Agropross: National Conference Proceedings of Agriculture, 2022","u":"https://proceedings.polije.ac.id/index.php/agropross/article/view/289","y":2022},{"t":"Aplikasi Pupuk Urea dan Pupuk Organik Cair terhadap Peningkatan Pertumbuhan dan Hasil Tanaman Sawi Pakcoy (Brassica rapa L.)","r":"c","v":"Agropross: National Conference Proceedings of Agriculture, 2022","u":"https://proceedings.polije.ac.id/index.php/agropross/article/view/293","y":2022},{"t":"Growth Response Of Grape (Vitis vinifera L.) Stem Cuttings To Giving Type And Duration Of Immersion Of Growth Regulatory Substances (Respon Pertumbuhan Stek Batang Tanaman Anggur (Vitis vinifera L.) Terhadap Pemberian Jenis Zat Pengatur Tumbuh Dan Lama Perendamannya)","r":"c","v":"Jurnal Penelitian Pertanian Terapan 22.3 (2022): 287-299.","u":"https://jurnal.polinela.ac.id/jppt/article/view/2220/1652","y":2022},{"t":"Respon pertumbuhan tanaman krisan pot terhadap hormon giberelin dan waktu pemangkasan yang berbeda","r":"c","v":"Jurnal Kultivasi, 21(3), 2022","u":"https://jurnal.unpad.ac.id/kultivasi/article/view/37187","y":2022},{"t":"Pengaruh Pemberian Konsentrasi Gula dan Paclobutrazol Pada Pengumbian Kentang Secara In Vitro","r":"fc","v":"J. Vegetalika, 11(4), 253-265, 2022","u":"https://jurnal.ugm.ac.id/jbp","y":2022},{"t":"Perbaikan Teknik Budidaya, Penanganan Pasca Panen dan Sistem Pemasaran Bawang Merah di Desa Sumber Kedawung, Kecamatan Leces, Kabupaten Probolinggo","r":"a","v":"2022: 5th National Conference for Community Service (NaCosVi)","u":"https://proceedings.polije.ac.id/index.php/ppm/article/view/393","y":2022},{"t":"Pengembangan Biochar Diperkaya Yang Multifungsi Untuk Pemeliharaan Kopi Beserta Dengan Pelatihan Sistem Pemasaran Berkelanjutan Di Desa Kemuning Lor","r":"a","v":"2022: 5th National Conference for Community Service (NaCosVi)","u":"https://proceedings.polije.ac.id/index.php/ppm/article/view/419","y":2022},{"t":"Penerapan Teknologi Perbenihan Bersertifikasi Berbasis Aeroponik dan Diversifikasi Produk Olahan Mendukung Pengembangan Sentra Agribisnis Kentang Berkelanjutan di Probolinggo","r":"a","v":"Dharma Raflesia: Jurnal Ilmiah Pengembangan dan Penerapan IPTEKS 20 (2): 406-420 2022","u":"https://ejournal.unib.ac.id/dharmaraflesia/article/view/24218","y":2022},{"t":"Pengembangan UKM Jamur Sehat COF di Jember melalui Produksi Bibit F1 dan Penerapan SOP Budidaya Jamur serta Teknologi Smart Kumbung","r":"fc","v":"Dharma Raflesia: Jurnal Ilmiah Pengembangan dan Penerapan IPTEKS 20 (2): 406-420 2022","u":"https://ejournal.unib.ac.id/dharmaraflesia/article/view/24280","y":2022},{"t":"Portable Device for Monitoring System in Network Culture Laboratory based on IoT","r":"a","v":"Proceeding the 3rd of Food and Agricultural Sciences: Polije Proceedings Series 2021/3/1/119-127","u":"https://proceedings.polije.ac.id/index.php/food-science/article/view/186","y":2021},{"t":"Strategic Plan Development For Palm Sugar Agroindustry Using Interpretative Structural Modeling (ISM) and MICMAC Methodology: Case Study in Jember","r":"a","v":"Proceeding the 3rd of Food and Agricultural Sciences: Polije Proceedings Series 2021/3/1/57-66","u":"https://proceedings.polije.ac.id/index.php/food-science/article/view/176","y":2021},{"t":"The effect of Biofertilizer Application and Shoot Pruning on the Growth of chili plants on sandy media","r":"a","v":"Proceeding the 3rd of Food and Agricultural Sciences: Polije Proceedings Series 2021/3/1/192-196","u":"https://proceedings.polije.ac.id/index.php/food-science/article/view/163","y":2021},{"t":"Application of Digital Image Processing to Predict the Diameter of Chrysanthemum Flowers Ready to Harvest","r":"a","v":"Proceeding the 3rd of Food and Agricultural Sciences: Polije Proceedings Series 2021/3/1/171-176","u":"https://proceedings.polije.ac.id/index.php/food-science/article/view/157","y":2021},{"t":"Penerapan Less Contact Economy Model Untuk Peningkatan Pendapatan Di Era Pandemi Covid","r":"fc","v":"Jurnal Ilmiah Pengembangan dan Penerapan IPTEKS Vol. 19, No. 01, Juni, 2021, pp. 62-70","u":"https://ejournal.unib.ac.id/index.php/dharmaraflesia/article/view/13760","y":2021},{"t":"Respon Pertumbuhan Dan Produksi Sawi Pakcoy (Brassica chinensis L.) Terhadap Pemberian Jenis Biochar Dan Jenis Pupuk","r":"c","v":"Agropross: National Conference Proceedings of Agriculture, Seminar Nasional dan Bimbingan Teknis Pertanian dengan tema “Peningkatan Produktivitas Pertanian Era Society 5.0 Pasca Pandemi 22 Juli 2021","u":"https://proceedings.polije.ac.id/index.php/agropross/article/view/v5-2021-b DOI : 10.25047/agropross.2021.208","y":2021},{"t":"Penerapan Alat Penjebak Serangga Otomatis Tenaga Surya Di Kelompok Tani Dusun Rayap Desa Kemuning Lor","r":"a","v":"Prosiding Seminar Nasional Terapan Riset Inovatif (SENTRINOV), 7(3), 150-157.2021","u":"https://proceeding.isas.or.id/index.php/sentrinov/article/view/1087","y":2021},{"t":"Pemberdayaan petani lokal dalam mengeksplorasi dan mengidentifikasi karakter durian (durio zibethinus murr.) Unggul lokal di dusun rayap desa kemuning lor kabupaten jember","r":"a","v":"Prosiding Seminar Nasional Terapan Riset Inovatif (SENTRINOV), 7(3), 150-157.2021","u":"https://proceeding.isas.or.id/index.php/sentrinov/article/view/1094","y":2021},{"t":"Respon Pertumbuhan Bibit jeruk JC (Japansche Citroen) dengan Pemberian Pupuk Organik dan Plant Growth Promoting Rhizobacteria (PGPR)","r":"c","v":"Jurnal Ilmiah Inovasi, 21(3), 146–152. https://doi.org/10.25047/jii.v21i3.2791 2021","u":"https://publikasi.polije.ac.id/index.php/jii/article/view/2791","y":2021},{"t":"Aplikasi Komposisi Media Tanam dan Dosis Pupuk NPK terhadap Pertumbuhan Tanaman Sedap Malam (Polianthes tuberosa L. CV. Roro Anteng).","r":"c","v":"Jurnal Ilmiah Inovasi, 21(3), 157–164. https://doi.org/10.25047/jii.v21i3.2789 2021","u":"https://publikasi.polije.ac.id/index.php/jii/article/view/2789","y":2021},{"t":"Pengembangan kombinasi produk olahan kelor dan susu sapi dalam mencegah stunting dan meningkatkan ekonomi kader posyandu Kemuning lor di era Covid-19","r":"a","v":"Jurnal Daharma Raflesia 19 (2) 409-425, 2021","u":"https://ejournal.unib.ac.id/index.php/dharmaraflesia/article/view/17753","y":2021},{"t":"Pengembangan Produk Olahan Labu Kuning Bagi Petani Benih Labu Kuning Di Kecamatan Tegalsari, Kabupaten Banyuwangi","r":"a","v":"Jurnal Pengabdian Masyarakat J-DINAMIKA2020/Vol 5/2/P-ISSN: 2503-1031, E-ISSN: 2503-1112","u":"https://publikasi.polije.ac.id/index.php/j-dinamika/article/view/2216","y":2020},{"t":"Peningkatan Pengetahuan Kader Posyandu dalam Pembuatan PMT Berbahan Dasar Kelor sebagai Upaya Percepatan Pencegahan Stunting","r":"a","v":"Jurnal Dharma Raflesia: Jurnal Ilmiah Pengembangan dan Penerapan IPTEKS/Vol 18/(2)/2020 P-ISSN: 1693-8046 e-ISSN: 2615-4544;","u":"https://ejournal.unib.ac.id/index.php/dharmaraflesia/article/view/12056","y":2020},{"t":"Growth and development of vanda (Vanda sanderiana) explants in vitro on the effect of extracts of organic matter","r":"a","v":"IOP Conference Series: Earth and Environmental Science, Volume 672, The 3rd International Conference on Food and Agriculture 7-8 November 2020, Jember, East Java, Indonesia","u":"https://iopscience.iop.org/article/10.1088/1755-1315/672/1/012003/meta","y":2020},{"t":"Exploration of agricultural waste as biochar to increase soil fertility of udipsamments in Jember district","r":"c","v":"IOP Conference Series: Earth and Environmental Science, Volume 672, The 3rd International Conference on Food and Agriculture 7-8 November 2020, Jember, East Java, Indonesia","u":"https://iopscience.iop.org/article/10.1088/1755-1315/672/1/012092/meta","y":2020},{"t":"The effect of the use of various kinds of biochar and soil nutrients on pakcoy (brassica rapa l.)","r":"a","v":"IOP Conference Series: Earth and Environmental Science, Volume 672, The 3rd International Conference on Food and Agriculture 7-8 November 2020, Jember, East Java, Indonesia","u":"https://iopscience.iop.org/article/10.1088/1755-1315/672/1/012014/meta","y":2020},{"t":"The increasing fertility of sandy soil and chili production through the application of organic fertilizers, zeolite and cane blotong","r":"a","v":"IOP Conference Series: Earth and Environmental Science, Volume 672, The 3rd International Conference on Food and Agriculture 7-8 November 2020, Jember, East Java, Indonesia","u":"https://iopscience.iop.org/article/10.1088/1755-1315/672/1/012101/meta","y":2020},{"t":"Moringa chicken nugget as supplementary food for toddler to prevent stunting","r":"a","v":"IOP Conference Series: Earth and Environmental Science, Volume 672, The 3rd International Conference on Food and Agriculture 7-8 November 2020, Jember, East Java, Indonesia","u":"https://iopscience.iop.org/article/10.1088/1755-1315/672/1/012065/meta","y":2020},{"t":"Growth And Multiplication Of Orchid Buds In Vitro With The Addition Of Corn (Zea mays) And Tomato (Licopersicum esculentum mill) Extract","r":"a","v":"Proceeding of International Joint Conference on Science and Technology (IJCST), Sheraton Surabaya Hotel & Towers, October 17th - 19th, 2019","u":"https://eco-entrepreneur.trunojoyo.ac.id/ijcst/article/view/8332","y":2019},{"t":"The Impact Analysis of a Waste Treatment Plant On Evironmental Quality","r":"a","v":"International Joint Conference on Science and Technology (IJCST), Sheraton Surabaya Hotel & Towers, October 17th - 19th, 2019","u":"https://eco-entrepreneur.trunojoyo.ac.id/ijcst/article/view/8342","y":2019}],"res":[{"y":2017,"t":"Pemacuan Pembungaan mendukung keberhasilan pengembangan Agribisnis Jeruk Keprok di lahan sub optimal di Tuban","s":"Hibah KP4S dari Kementrian Pertanian (Ad-Hoc)"},{"y":2018,"t":"Karakterisasi Morfologi dan Biokimia Anggrek Vanda sp. sebagai sumber informasi genetik bagi pelestarian dan Agribisnis anggrek di Indonesia","s":"PNBP POLIJE"},{"y":2019,"t":"Pertumbuhan Dan Multiplikasi Tunas Hasil Silangan Anggrek Vanda Secara Invitro Dengan Perlakuan Media Organik","s":"PNBP POLIJE"},{"y":2020,"t":"Pemanfaatan Bahan Organik dan Pupuk Majemuk terhadap Pertumbuhan Planlet Anggrek Vanda Siap Aklimatisasi","s":"PNBP POLIJE"},{"y":2021,"t":"Penerapan Adaptive Precision Farming Untuk Mendukung Produksi Benih Hortikultura Bersama PT East West Seed Indonesia","s":"PROGRAM MATCHING FUND VOKASI"},{"y":2021,"t":"Pengembangan Sistem Pertanian Presisi Agribot- SIP Berbasis CNC & IoT untuk Inovasi Teknologi Urban Farming dalam Mewujudkan Ketahanan Pangan Nasional","s":"Program Riset Keilmuan Terapan Dalam Negeri -Dosen PT Vokasi"},{"y":2021,"t":"Model Peningkatan Kinerja Pemasaran Berbasis Riset Pasar, Inovasi Produk, Keunggulan Bersaing, Adaptabilitas Lingkungan Dan Digitalisasi Layanan Di Teaching Factory (Tefa) Bakery And Coffee Polije","s":"PNBP POLIJE"},{"y":2022,"t":"Aplikasi Modifikasi Media MS Dalam Produksi Bibit Krisan (Chrisanthemum Sp.) Berkualitas Melalui Kultur In Vitro Guna Mendukung Pengembangan Teaching Factory Dataran Tinggi","s":"PNBP POLIJE"},{"y":2022,"t":"Respon Pertumbuhan Dan Ketahanan Penyakit Jeruk Melalui Pemberian Pupuk Organik Dan Bahan Penginduksi Ketahanan Dalam Mendukung Pengembangan Taman Teknologi Jeruk Di Tefa Jeju Techno Park Polije","s":"PNBP POLIJE"},{"y":2023,"t":"Penelitian Dasar: Modifikasi Media Subkultur Dalam Produksi Plantlet Unggul Tiga Kultivar Krisan Secara In Vitro Guna Mendukung Pengembangan Teaching Factory Kebun Inovasi Dan Nursery Bunga Potong Politeknik Negeri Jember","s":"PNBP POLIJE"},{"y":2023,"t":"Diseminasi Teknologi Inovasi Polije – Smart Farming berbasis energi terbarukan pada komunitas BUMDesa untuk mensukseskan program petani Milenial dan pengembangan Edu Wisata di Desa Glagahwero Kabupeten Jember","s":"PROGRAM MATCHING FUND VOKASI"},{"y":2024,"t":"Pengaruh Aplikasi ZPT dan Dosis Pupuk Terhdapa bunga Krisan di Tefa Kebun Inovasi dan Dataran Tinggi","s":"PNBP POLIJE"},{"y":2024,"t":"Aplikasi GA3 dan Pupuk kalium untuk mengoptimalkan kedelai harapan calon varietas Polije","s":"PNBP POLIJE"},{"y":2024,"t":"Aplikasi IS4AC (Intelligence System for Air Controller) untuk Pengendalian Kualitas Udara Gudang Penyimpanan Tembakau PT. Mangli Djaya Raya","s":"PROGRAM MATCHING FUND VOKASI"},{"y":2025,"t":"Integrasi Sistem Pirolisis Kondenser Spiral Berpendingin Alami pada Alat Pengasapan Ikan Tenaga Surya untuk Meningkatkan Efisiensi dan Kualitas Asap Cair","s":"Kompetitif Nasional · Penelitian Fundamental Kementerian Pendidikan Tinggi, Sains, dan Teknologi Republik Indonesia"},{"y":2025,"t":"Integrasi Inovasi Teknologi Portable-AI-Drone untuk Optimalisasi Produksi dan Ketahanan Pangan Berkelanjutan","s":"Kompetitif Nasional · Penelitian Riset Konsorsium Unggulan Berdampak, Kementerian Pendidikan Tinggi, Sains, dan Teknologi Republik Indonesia"},{"y":2025,"t":"Peningkatan Keragaman Genetik Tanaman Pegagan Melalui Eksplorasi Dan Identifikasi Serta Induksi Mutasi Dalam Mendukung Diversifikasi Produk Herbal Di Kebun Inovasi","s":"PNBP POLIJE"}],"srv":[{"y":2017,"t":"Adiwiyata Sman I Parengan \"Pengenalan Dasar Penanganan Sampah Di Sman I Parengan\"","s":"Mandiri"},{"y":2017,"t":"Perbaikan Lingkungan Hidup Melalui Kegiatan Penghijauan Guna Mendukung Pertanian Berkelanjutan","s":"Biaya Operasional Perguruan Tinggi"},{"y":2017,"t":"Teknologi pembuatan asap cair yang multifungsi berbahan limbah pertanian di wilayah Tuban-Jawar Timur","s":"Kemenristekdikti melalui hibah Diseminasi Teknologi ke Masyarakat"},{"y":2018,"t":"Penerapan Teknologi Vernalisasi Umbi dalam Mendukung Pengembangan Sentra Agribisnis Bawang Putih di Kecamatan Sukapura Kabupaten Probolinggo","s":"BOPTN POLIJE"},{"y":2019,"t":"Pengembangan Sentra Agribisnis Cabai Guna Mendukung Program Sustainable Development Goals (Sdg's) Di Kecamatan Wuluhan Kabupaten Jember","s":"PNBP POLIJE"},{"y":2020,"t":"Pengembangan Sentra Durian di Desa Kemuning Lor Kecamatan Arjasa Melalui Perbaikan Teknik Budidaya dan Pelatihan Sertifikasi Benih serta Penerapan Pemasaran Berbasis e-Commerce","s":"PNBP POLIJE"},{"y":2020,"t":"Inovasi Produksi dan E-Commerce Berbasiskan Less Contact Economy Model di UMKM Rumahku Hidroponik Jember","s":"Program Pemberdayaan Masyarakat, Skema Ukm Indonesia Bangkit Kementerian Riset Dan Teknologi/Brin Tahun Anggaran 2020"},{"y":2022,"t":"Pengembangan UKM Jamur Sehat COF di Kabupaten Jember melalui produksi bibit F1 dan penerapan budidaya jamur sesuai SOP dengan didukung teknologi Smart kumbung serta perbaikan sistem rantai pasok yang berkelanjutan","s":"Direktorat Jenderal Pendidikan Vokasi Kementerian Pendidikan, Kebudayaan, Riset dan Teknologi"},{"y":2022,"t":"Optimalisasi pemanfaatan limbah kopi sebagai media substitusi dalam budidaya jamur dan pelatihan teknologi olahan serta pemasarannya sebagai penerapan industry kopi berbasis produksi bersih di Kecamatan Arjasa","s":"PNBP POLIJE"},{"y":2023,"t":"Pemberdayaan Pondok Pesantren Al- Ifadah Sumberjo yang Mandiri melalui Penerapan Sistem Agribisnis Terpadu dan Pengembangan Jiwa Wirausaha Santri melalui pemasaran berbasis e-commerce","s":"Direktorat Jenderal Pendidikan Vokasi Kementerian Pendidikan, Kebudayaan, Riset dan Teknologi"},{"y":2023,"t":"Penerapan Pengendalian Hama Penyakit Terpadu, Inovasi Produk Melon Berbentuk Unik Dan Perbaikan Kemasan Di Tefa Smart Green House Politeknik Negeri Jember","s":"PNBP POLIJE"},{"y":2024,"t":"Penerapan inovasi silase pakan komplit berbasis limbah pertanian dan digitalisasi pemasaran di CV An-Kim Indo Farm dan Faris jaya Farm","s":"INOVOKASI"},{"y":2024,"t":"Capacity Building Kader Posyandu melalui Digitalisasi dan Creative Health Berbasis Ketahanan Pangan Lokal dan Inovasi Produk Ternak sebagai Percepatan Zero Stunting di Posyandu Melati Kabupaten Probolinggo","s":"Direktorat Jenderal Pendidikan Vokasi Kementerian Pendidikan, Kebudayaan, Riset dan Teknologi Batch 3"},{"y":2024,"t":"Optimalisasi Ketersediaan Nutrisi dan Pengendalian HPT Pada Tanaman Jeruk Fase Generatif dan Perbaikan Penanganan Panen dan Pasca Panen Jeruk Serta Kemasan di Teaching Factory Kebun Inovasi dan Nursery Potong, Jeju Techno Park Politeknik Negeri Jember","s":"PNBP POLIJE"},{"y":2025,"t":"Penguatan Ekonomi Hijau Desa Klungkung melalui Penerapan Teknologi Budidaya dan Pengolahan Kopi Terintegrasi serta Inovasi Pemanfaatan Limbah Ternak Diperkaya Nanokitosan dalam Model Pertanian Sirkular","s":"Program Transformasi Teknologi dan Inovasi, Kementerian Pendidikan Tinggi, Sains, dan Teknologi Republik Indonesia"},{"y":2025,"t":"Akselerasi Pengembangan Budidaya Jeruk Berkelanjutan Di Kelompok Tani Ngudi Rejeki Melalui Rejuvinasi Tanaman, Penerapan Pengendalian Hama Dan Penyakit Terpadu Serta Penguatan Kelembagaan Berkolaborasi Dengan Tefa Kebun Inovasi Politeknik Negeri Jember","s":"PNBP POLIJE"}],"conf":[{"n":"The 2nd International Conference on Food and Agriculture (ICoFA)","t":"Endogenous Hormones At The Beginning Of Leaf Growth After Vernalization Of Garlic Bulb (Allium Sativum L.) In Indonesian Local Varieties","w":"Nusa Dua Bali, 2nd – 3rd November 2019"},{"n":"The 2nd International Conference on Food and Agriculture (ICoFA)","t":"The growth response of chili plant in sand land with the provision of organic material, zeolite and cane blotong","w":"Nusa Dua Bali, 2nd – 3rd November 2019"},{"n":"International Joint Conference on Science and Technology (IJCST)","t":"The Impact Analysis of a Waste Treatment Plant On Evironmental Quality","w":"Sheraton Surabaya Hotel & Towers, October 17th - 19th, 2019"},{"n":"The 3th International Conference on Food and Agriculture (ICoFA)","t":"The increasing fertility of sandy soil and chili production through the application of organic fertilizers, zeolite and cane blotong","w":"Politeknik Negeri Jember, 7th - 8th November 2020"},{"n":"The 4th International Conference on Food and Agriculture (ICoFA)","t":"The effect of Biofertilizer Application and Shoot Pruning on the Production of chili plants on sandy media","w":"Politeknik Negeri Jember 6th - 7th November 2021"},{"n":"The 5th International Conference on Food and Agriculture (ICoFA)","t":"The comparison between coffee husk waste and sawdust as planting media on mycelia growth and Productivity of White Oyster Mushroom (Pleurotus ostreatus)","w":"Banyuwangi, 5th - 6th November 2022"},{"n":"The 6th International Conference on Food and Agriculture (ICoFA)","t":"Application Of Liquid Organic Fertilizer And Types Of Media On The Growth And Yield Of Lettuce (Lactuca sativa L.) In A Sustainable Hydroponic Cultivation System","w":"Banyuwangi, 18th - 19th November 2023"},{"n":"Pada kegiatan 6th National Conference for Community Service (NaCosVi) Politeknik Negeri Jember dengan tema \"Sinergi Teaching Factory dan Masyarakat Desa menuju Indonesia Emas\" pada tanggal","t":"Pengemabangan Inovasi Melon Art dan Peningkatan Branding Melon Premium di Tefa SGH Polije","w":"2 Desember 2023 di Jember"},{"n":"The 7th International Conference on Food and Agriculture (ICoFA)","t":"In Vitro Modification of Subculture Media in the Production of Superior Plantlets on Three Chrysanthemum Cultivars","w":"Banyuwangi, October 2024"},{"n":"The 8th International Conference on Food and Agriculture (ICoFA)","t":"The effectiveness of the interval of liquid organic fertilizer application of goat urine and different planting media on the growth and yield of goat asiatica (Centella asiatica L.)","w":"25 October 2025, Jember"}],"books":[{"t":"Teknik Budidaya Tanaman Buah Tahunan ( Seri 2 )","i":"9786239364625","y":2020,"p":"103","pb":"Polije Press"},{"t":"Budidaya tanaman hias (Konsep Dasar Bertanam Tanaman)","i":"9786239366353","y":2020,"p":"82","pb":"Polije Press"},{"t":"Rumahku Hidroponik “Konsep Dasar Budidaya Tanaman Secara Hidroponik”","i":"9786236917077","y":2021,"p":"125","pb":"Polije Press"},{"t":"Inovasi Produk Pertanian","i":"9786233422796","y":2021,"p":"140","pb":"Yayasan Kita Menulis, Medan"},{"t":"Pupuk dan Teknologi Pemupukan","i":"9786233422789","y":2021,"p":"150","pb":"Yayasan Kita Menulis, Medan"},{"t":"Pertanian Organik","i":"9786233422635","y":2021,"p":"130","pb":"Yayasan Kita Menulis, Medan"},{"t":"Ilmu Kesuburan Tanah dan Pemupukan","i":"9786233421652","y":2021,"p":"110","pb":"Yayasan Kita Menulis, Medan"},{"t":"Tanah dan Nutrisi Tanaman","i":"9786233421393","y":2021,"p":"118","pb":"Yayasan Kita Menulis, Medan"},{"t":"Pengelolaan lahan kering","i":"9786233424592","y":2022,"p":"136","pb":"Yayasan Kita Menulis, Medan"},{"t":"Hidrologi pertanian","i":"9786233426466","y":2022,"p":"154","pb":"Yayasan Kita Menulis, Medan"},{"t":"Pemuliaan tanaman","i":"9786233426626","y":2022,"p":"104","pb":"Yayasan Kita Menulis, Medan"},{"t":"Teknologi dan produksi benih","i":"9786233427357","y":2023,"p":"154","pb":"Yayasan Kita Menulis, Medan"},{"t":"Antimikroba tanaman lokal","i":"9786233427401","y":2023,"p":"164","pb":"Yayasan Kita Menulis, Medan"},{"t":"Mikroorganisme pelarut fosfat pada pertanian berkelanjutan","i":"9786233427760","y":2023,"p":"152","pb":"Yayasan Kita Menulis, Medan"},{"t":"Pengantar Ilmu Tanaman","i":"9786233429375","y":2023,"p":"175","pb":"Yayasan Kita Menulis, Medan"},{"t":"Budidaya Jamur Tiram","i":"9786230965166","y":2023,"p":"95","pb":"CV Hei Publishing Indonesia"},{"t":"Tantangan dan Masa Depan Agroteknologi","i":"978-623-113-208-6","y":2024,"p":"124","pb":"Yayasan Kita Menulis, Medan"},{"t":"Inovasi Smart Farming 5.0 dalam Rekayasa IoT dan Big Data","i":"978-623-113-467-7","y":2024,"p":"266","pb":"Yayasan Kita Menulis, Medan"},{"t":"Membangun Desa Berbasis Indeks Pembangunan","i":"978-623-113-202-4","y":2024,"p":"214","pb":"Yayasan Kita Menulis, Medan"},{"t":"Dasar-Dasar Hortikultura","i":"978-623-8720-32-3","y":2024,"p":"175","pb":"KHD Production"},{"t":"Ekonomi Pertanian dan Pangan : Isu-isu Terkini","i":"9786342601549","y":2026,"p":"474","pb":"Yayasan Kita Menulis, Medan"},{"t":"Pertanian Organik","i":"9786347526328","y":2026,"p":"159","pb":"CV Hei Publishing Indonesia"},{"t":"Dasar dasar Pertanian Organik untuk Pemula","i":"9786342600412","y":2026,"p":"192","pb":"Yayasan Kita Menulis, Medan"},{"t":"Revolusi Energi Terbarukan Dari Limbah Pertanian Menuju Pangan Aman Dan Pertanian Berkelanjutan","i":"","y":2026,"p":"172","pb":"CV Hei Publishing Indonesia"}],"hki":[{"y":2020,"t":"Diversifikasi Produk Kelor Dalam Mendukung Ekonomi Kader Dan Percepatan Pencegahan Stunting","k":"Rekaman video","n":"EC00202054257"},{"y":2021,"t":"Pengembangan Kombinasi Produk Olahan Kelor dan Susu Sapi dalam mencegah stunting","k":"Rekaman video","n":"EC00202142638"},{"y":2021,"t":"Rumahku Hidroponik (Konsep Dasar Budidaya Tanaman Secara Hidroponik)","k":"Buku","n":"EC00202164577"},{"y":2021,"t":"Manajemen Posyandu","k":"Modul","n":"EC00202204015"},{"y":2022,"t":"Perbanyakan Benih Durian Secara Vegetatif","k":"Modul","n":"EC00202207858"},{"y":2022,"t":"Tata Laksana Stunting (Balita Pendek)","k":"Modul","n":"EC00202204027"},{"y":2022,"t":"Good dairy farming practices","k":"Modul","n":"EC00202204014"},{"y":2022,"t":"Budidaya Tanaman Sayur Dan Toga Di Pekarangan Rumah","k":"Modul","n":"EC00202204013"},{"y":2022,"t":"Inovasi Produk Pertanian","k":"Buku","n":"EC00202207817"},{"y":2022,"t":"Modul Budidaya Vertiminaponik","k":"Modul","n":"EC00202252076"},{"y":2022,"t":"Modul Budidaya Jamur Tiram","k":"Modul","n":"EC00202277869"},{"y":2022,"t":"Aplikasi Android Agribot Versi 1.0","k":"Program komputer","n":"EC00202278443"},{"y":2022,"t":"GUI Agribot Berbasis Python Pada Raspberry Pi","k":"Program komputer","n":"EC00202236590"},{"y":2023,"t":"Antimikroba Tanaman Lokal","k":"Buku","n":"EC00202319210"},{"y":2023,"t":"Teknologi dan Produksi Benih","k":"Buku","n":"EC00202317603"},{"y":2023,"t":"Budidaya Jamur Tiram","k":"Buku","n":"EC002023112688"},{"y":2023,"t":"Foto Desain Aquaponic Berkelanjutan","k":"Desain","n":"EC00202396414"},{"y":2023,"t":"Desain Kemasan Produk Buah Melon Premium Berbentuk Unik","k":"Desain","n":"EC002023116864"},{"y":2024,"t":"Optimalisasi Nutrisi, Pengendalian HPT Jeruk Siam Pada Fase Generatif, Serta Perbaikan Penanganan Panen, Pasca Panen, Dan Kemasan Di TEFA Kebun Inovasi Dan Nursery, Jeju Techno Park, Politeknik Negeri Jember Bosproses","k":"Rekaman video","n":"EC002024253376"},{"y":2024,"t":"Modul Penanganan Pasca Panen Dan Pengembangan Produk Jeruk Siam","k":"Buku panduan","n":"EC002024223160"},{"y":2024,"t":"GAP (Good Agricultural Practices) Dan GHP (Good Handling Practices) pada Mangga","k":"Buku panduan","n":"EC00202497962"},{"y":2024,"t":"Aplikasi IS4AC (Intelligence System For Air Controller) Untuk Pengendalian Kualitas Udara Gudang Penyimpanan Tembakau PT. Mangli Djaya Raya","k":"Program / kompilasi data","n":"EC002024202497"},{"y":2024,"t":"Website Profile Faris Jaya Farm","k":"Program komputer","n":"EC002024210044"},{"y":2024,"t":"Website Profile An-Kim Indo Farm","k":"Program komputer","n":"EC002024210055"},{"y":2024,"t":"Petunjuk olahan mangga","k":"Buku panduan","n":"EC00202497963"},{"y":2025,"t":"Perangkat Lunak Antarmuka GIS Berbasis PyQt6 dan Leaflet untuk Visualisasi Peta dan Data Geospasial Wilayah Jember","k":"Program komputer","n":"EC002025177087"},{"y":2025,"t":"Modul Pelatihan Rejuvinasi Pada Tanaman Jeruk","k":"Buku panduan","n":"EC002025151172"},{"y":2025,"t":"Perangkat Lunak Sistem Identifikasi Hama dan Penyakit Tanaman Padi Berbasis LLM Light+ dengan Integrasi Parameter Suhu, Kelembapan, dan pH Tanah","k":"Program komputer","n":"EC002025177190"},{"y":2025,"t":"Implementasi Model YOLO pada Platform Jetson untuk Deteksi Visual Penyakit Tanaman Padi","k":"Program komputer","n":"EC002025177242"},{"y":2025,"t":"Pemasaran Digital Komoditas Durian","k":"Buku panduan","n":"EC002025126540"}]};
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* theme toggle */
+(() => {
+  const root = document.documentElement, b = $('#themeBtn');
+  let saved = null; try { saved = localStorage.getItem('rf-theme'); } catch(e) {}
+  if (saved) root.dataset.theme = saved;
+  b.addEventListener('click', () => {
+    const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    root.dataset.theme = dark ? 'light' : 'dark';
+    try { localStorage.setItem('rf-theme', root.dataset.theme); } catch(e) {}
+  });
+})();
+
+/* index tiles */
+const firstAuthor = D.pubs.filter(p => p.r && p.r !== 'a').length;
+const tiles = [
+  ['#profil','profil','01', 'S2', 'Profil', 'Pendidikan, jabatan, bidang minat'],
+  ['#penelitian','riset','02', D.res.length, 'Penelitian', 'Hibah internal hingga nasional'],
+  ['#publikasi','pub','03', D.pubs.length, 'Artikel ilmiah', firstAuthor + ' sebagai penulis pertama/korespondensi'],
+  ['#buku','buku','04', D.books.length, 'Buku', 'Buku ajar & referensi ber-ISBN'],
+  ['#hki','hki','05', D.hki.length, 'Hak cipta', 'Program, modul, buku, video'],
+  ['#pengabdian','abdi','06', D.srv.length, 'Pengabdian', 'Kelompok tani, UMKM, posyandu'],
+  ['#pengajaran','ajar','07', 13, 'Mata kuliah', 'Hortikultura, benih, hidroponik'],
+  ['#penghargaan','award','08', 6, 'Penghargaan', 'Dosen terbaik, reviewer, editor'],
+  ['#galeri','galeri','09', 4, 'Galeri foto', 'Kampus dan lahan praktik'],
+];
+$('#tiles').innerHTML = tiles.map(([h,c,k,n,l,d]) => `<a class="tile" href="${h}" style="--tc:var(--c-${c})"><span class="k">${k}</span><span class="n">${n}</span><span class="l">${l}</span><span class="d">${d}</span></a>`).join('');
+
+/* research */
+const fundTag = s => /Kompetitif Nasional|Matching Fund|MATCHING|Kementrian|Riset Keilmuan|INOVOKASI|Transformasi/i.test(s) ? ['nat','Nasional'] : ['loc','Internal'];
+$('#resList').innerHTML = [...D.res].reverse().map(r => { const [c,l] = fundTag(r.s); return `<li><span class="y">${r.y}</span><div><div class="t">${esc(r.t)}</div><div class="m"><span class="tag ${c}">${l}</span>${esc(r.s)}</div></div></li>`; }).join('');
+const nat = D.res.filter(r => fundTag(r.s)[0]==='nat').length;
+$('#resSide').innerHTML = `<div class="eyebrow" style="margin-bottom:6px">Ringkasan</div>${D.res.length} proyek sejak 2017<br>${nat} didanai skema nasional/industri<br>${D.res.length-nat} hibah internal Polije`;
+
+/* publications */
+const roleTxt = {fc:'Penulis pertama & korespondensi', f:'Penulis pertama', c:'Penulis korespondensi', a:'Anggota penulis', '':''};
+const years = [...new Set(D.pubs.map(p => p.y))].sort((a,b) => b-a);
+let fYear = 'all', fRole = 'all', q = '', showAll = false;
+$('#pubYear').innerHTML = `<button type="button" data-v="all" aria-pressed="true">Semua tahun</button>` + years.map(y => `<button type="button" data-v="${y}" aria-pressed="false">${y} · ${D.pubs.filter(p=>p.y===y).length}</button>`).join('');
+const maxN = Math.max(...years.map(y => D.pubs.filter(p=>p.y===y).length));
+$('#pubSpark').innerHTML = [...years].reverse().map(y => { const n = D.pubs.filter(p=>p.y===y).length; return `<div title="${y}: ${n} artikel"><i style="height:${Math.round(n/maxN*44)+2}px"></i><span>${String(y).slice(2)}</span></div>`; }).join('');
+function renderPubs(){
+  const qq = q.toLowerCase();
+  const list = D.pubs.filter(p => (fYear==='all' || p.y==+fYear) && (fRole==='all' || (fRole==='first' ? (p.r && p.r!=='a') : !!p.q)) && (!qq || (p.t+' '+p.v).toLowerCase().includes(qq)));
+  const lim = (showAll || q || fYear!=='all' || fRole!=='all') ? list.length : 12;
+  $('#pubCount').textContent = `${list.length} artikel` + (lim < list.length ? `, menampilkan ${lim} terbaru` : '');
+  let lastY = null;
+  const perY = {}; list.forEach(p => perY[p.y] = (perY[p.y]||0) + 1);
+  $('#pubList').innerHTML = list.slice(0, lim).map(p => {
+    const grp = p.y !== lastY ? `<li class="grp"><b>${p.y}</b><small>${perY[p.y]} artikel</small></li>` : ''; lastY = p.y;
+    const title = p.u ? `<a href="${esc(p.u)}" target="_blank" rel="noopener">${esc(p.t)}</a>` : esc(p.t);
+    const tags = (p.q ? `<span class="tag q">Scopus ${p.q}</span>` : '') + (p.r && p.r!=='a' ? `<span class="tag role">${roleTxt[p.r]}</span>` : '');
+    return grp + `<li><span class="y">${p.y}</span><div><div class="t">${title}</div><div class="m">${tags}${esc(p.v)}</div></div></li>`;
+  }).join('') || `<li><span></span><div class="m">Tidak ada artikel yang cocok. Coba kata kunci lain atau pilih "Semua tahun".</div></li>`;
+  $('#pubMore').hidden = lim >= list.length;
+}
+function seg(el, cb){ el.addEventListener('click', e => { const b = e.target.closest('button'); if(!b) return; el.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x===b)); cb(b.dataset.v); }); }
+seg($('#pubYear'), v => { fYear = v; renderPubs(); });
+seg($('#pubRole'), v => { fRole = v; renderPubs(); });
+$('#pubQ').addEventListener('input', e => { q = e.target.value.trim(); renderPubs(); });
+$('#pubMore').addEventListener('click', () => { showAll = true; renderPubs(); });
+renderPubs();
+
+$('#confList').innerHTML = [...D.conf].reverse().map(c => { const y = (c.w.match(/20\d\d/)||[''])[0]; return `<li><span class="y">${y}</span><div><div class="t">${esc(c.t)}</div><div class="m">${esc(c.n.replace(/^Pada kegiatan /,'').replace(/ pada tanggal$/,''))} · ${esc(c.w)}</div></div></li>`; }).join('');
+
+/* books */
+$('#bookList').innerHTML = [...D.books].sort((a,b)=>b.y-a.y).map(b => `<div class="book"><span class="eyebrow">${b.y} · ${esc(b.p)} hlm</span><div class="t">${esc(b.t)}</div><div class="m">${esc(b.pb)}</div>${b.i ? `<div class="i">ISBN ${esc(b.i)}</div>` : ''}</div>`).join('');
+
+/* HKI */
+const kinds = [...new Set(D.hki.map(h => h.k))];
+let fKind = 'all';
+const kcList = ['hki','riset','buku','pub','abdi','ajar','profil']; const kc = {}; kinds.forEach((k,i) => kc[k] = kcList[i % kcList.length]);
+$('#hkiKind').innerHTML = `<button type="button" data-v="all" aria-pressed="true">Semua · ${D.hki.length}</button>` + kinds.map(k => `<button type="button" data-v="${esc(k)}" aria-pressed="false">${esc(k)} · ${D.hki.filter(h=>h.k===k).length}</button>`).join('');
+function renderHki(){ $('#hkiBody').innerHTML = [...D.hki].reverse().filter(h => fKind==='all' || h.k===fKind).map(h => `<tr><td class="y">${h.y}</td><td>${esc(h.t)}</td><td><span class="kind" style="--kc:var(--c-${kc[h.k]})">${esc(h.k)}</span></td><td class="n">${esc(h.n)}</td></tr>`).join(''); }
+seg($('#hkiKind'), v => { fKind = v; renderHki(); });
+renderHki();
+
+/* community service */
+$('#srvList').innerHTML = [...D.srv].reverse().map(s => `<li><span class="y">${s.y}</span><div><div class="t">${esc(s.t)}</div><div class="m">${esc(s.s)}</div></div></li>`).join('');
+
+/* copy buttons */
+document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', () => {
+  const el = document.getElementById(b.dataset.copy), txt = el.textContent;
+  const done = () => { b.textContent = 'Tersalin'; setTimeout(() => b.textContent = 'Salin', 1600); };
+  const sel = () => { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = 'Teks dipilih'; setTimeout(() => b.textContent = 'Salin', 1600); };
+  try { navigator.clipboard.writeText(txt).then(done, sel); } catch(e) { sel(); }
+}));
+
+/* lightbox */
+(() => {
+  const lb = $('#lb'), img = $('#lbimg'), cap = $('#lbcap');
+  let last = null;
+  const close = () => { lb.hidden = true; if (last) last.focus(); };
+  $('#gallery').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; last = b; img.src = b.dataset.src; img.alt = b.querySelector('img').alt; cap.textContent = b.querySelector('span').textContent; lb.hidden = false; $('#lbx').focus(); });
+  $('#lbx').addEventListener('click', close);
+  lb.addEventListener('click', e => { if (e.target === lb) close(); });
+  addEventListener('keydown', e => { if (e.key === 'Escape' && !lb.hidden) close(); });
+})();
+
+/* active nav */
+const links = [...document.querySelectorAll('nav.idx a')];
+const secs = links.map(a => document.querySelector(a.getAttribute('href')));
+addEventListener('scroll', () => {
+  let cur = -1; secs.forEach((s,i) => { if (s && s.getBoundingClientRect().top < 120) cur = i; });
+  links.forEach((a,i) => a.classList.toggle('on', i===cur));
+}, {passive:true});
+</script>
+
+</body>
+</html>
